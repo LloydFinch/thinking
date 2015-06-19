@@ -8,12 +8,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cn.androidy.thinking.DrawableDemoActivity">
 
-    <View
+    <TextView
         android:id="@+id/view"
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:text="测试文字"
+        android:textSize="24dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
