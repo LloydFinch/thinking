@@ -12,6 +12,7 @@
     <string name="title_activity_weather">天气</string>
     <string name="title_activity_calendar_picker_view">日历选择</string>
     <string name="title_activity_demo_detail_base">DemoDetailBaseActivity</string>
-    <string name="title_activity_ripple">RippleActivity</string>
-    <string name="title_activity_banner">BannerActivity</string>
+    <string name="title_activity_ripple">水波纹</string>
+    <string name="title_activity_banner">轮播广告位</string>
+    <string name="title_activity_drawable_demo">各种各样的Drawable</string>
 </resources>

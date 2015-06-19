@@ -49,6 +49,10 @@
             android:name=".BannerActivity"
             android:label="@string/title_activity_banner" >
         </activity>
+        <activity
+            android:name=".DrawableDemoActivity"
+            android:label="@string/title_activity_drawable_demo" >
+        </activity>
     </application>
 
 </manifest>
