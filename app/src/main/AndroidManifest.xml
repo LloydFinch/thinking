@@ -53,6 +53,10 @@
             android:name=".DrawableDemoActivity"
             android:label="@string/title_activity_drawable_demo" >
         </activity>
+        <activity
+            android:name=".game.pintu.PintuActivity"
+            android:label="@string/title_activity_pintu" >
+        </activity>
     </application>
 
 </manifest>
