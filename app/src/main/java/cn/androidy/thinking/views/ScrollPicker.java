@@ -3,6 +3,8 @@ package cn.androidy.thinking.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -13,6 +15,8 @@ import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.List;
+
+import cn.androidy.thinking.R;
 
 /**
  * 仿IOS底部滚轮选择器
@@ -27,6 +31,18 @@ public class ScrollPicker extends View {
     private int mColorText = 0xff333333;
     private boolean isDoingAnimation = false;
     private float lastDownY;
+    private int[] SHADOWS_COLORS = new int[]{0xFF111111,
+            0x00AAAAAA, 0x00AAAAAA};
+    // Center Line
+    private Drawable centerDrawable;
+
+    // Wheel drawables
+    private int wheelBackground = R.drawable.wheel_bg;
+    private int wheelForeground = R.drawable.wheel_val;
+
+    // Shadows drawables
+    private GradientDrawable topShadow;
+    private GradientDrawable bottomShadow;
 
     public ScrollPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -59,8 +75,8 @@ public class ScrollPicker extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        initResourcesIfNecessary();
         int h = getHeight();
-        int mh = getMeasuredHeight();
         int w = getWidth();
         plm.initCanvasTotalArea(w, h);
         plm.bindData(mDataList);
@@ -71,6 +87,39 @@ public class ScrollPicker extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         plm.doDraw(canvas, mPaint);
+        drawCenterRect(canvas);
+        drawShadows(canvas);
+    }
+
+    /**
+     * Set the shadow gradient color
+     *
+     * @param start
+     * @param middle
+     * @param end
+     */
+    public void setShadowColor(int start, int middle, int end) {
+        SHADOWS_COLORS = new int[]{start, middle, end};
+    }
+
+    /**
+     * Sets the drawable for the wheel background
+     *
+     * @param resource
+     */
+    public void setWheelBackground(int resource) {
+        wheelBackground = resource;
+        setBackgroundResource(wheelBackground);
+    }
+
+    /**
+     * Sets the drawable for the wheel foreground
+     *
+     * @param resource
+     */
+    public void setWheelForeground(int resource) {
+        wheelForeground = resource;
+        centerDrawable = getContext().getResources().getDrawable(wheelForeground);
     }
 
     public boolean show() {
@@ -136,6 +185,56 @@ public class ScrollPicker extends View {
             }
         }).start();
         return true;
+    }
+
+    /**
+     * Initializes resources
+     */
+    private void initResourcesIfNecessary() {
+        if (centerDrawable == null) {
+            centerDrawable = getContext().getResources().getDrawable(wheelForeground);
+        }
+
+        if (topShadow == null) {
+            topShadow = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, SHADOWS_COLORS);
+        }
+
+        if (bottomShadow == null) {
+            bottomShadow = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, SHADOWS_COLORS);
+        }
+
+        setBackgroundResource(wheelBackground);
+    }
+
+
+    /**
+     * Draws rect for current value
+     *
+     * @param canvas the canvas for drawing
+     */
+    private void drawCenterRect(Canvas canvas) {
+        int center = getHeight() / 2;
+        int offset = getItemHeight();
+        centerDrawable.setBounds(0, center - offset, getWidth(), center + offset);
+        centerDrawable.draw(canvas);
+    }
+
+    /**
+     * Draws shadows on top and bottom of control
+     *
+     * @param canvas the canvas for drawing
+     */
+    private void drawShadows(Canvas canvas) {
+        int height = getItemHeight();
+        topShadow.setBounds(0, 0, getWidth(), height);
+        topShadow.draw(canvas);
+
+        bottomShadow.setBounds(0, getHeight() - height, getWidth(), getHeight());
+        bottomShadow.draw(canvas);
+    }
+
+    private int getItemHeight() {
+        return plm.getItemHeight();
     }
 
     @Override

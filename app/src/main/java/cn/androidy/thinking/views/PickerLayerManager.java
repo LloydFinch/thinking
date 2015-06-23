@@ -3,8 +3,6 @@ package cn.androidy.thinking.views;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.example.android.common.logger.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,7 @@ public class PickerLayerManager {
     private int mWidth;
     private int mHeight;
     private float density = 1.0f;
+    private int itemHeight;
 
     //初始化绑定数据
     public PickerLayerManager(float density) {
@@ -60,8 +59,13 @@ public class PickerLayerManager {
             if (distance < minDistance) {
                 minDistance = distance;
                 selectedPosition = i;
+                itemHeight = mPickerLayerList.get(selectedPosition).getItemHeight();
             }
         }
         return mPickerLayerList.get(selectedPosition);
+    }
+
+    public int getItemHeight() {
+        return itemHeight;
     }
 }

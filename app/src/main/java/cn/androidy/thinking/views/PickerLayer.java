@@ -4,8 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import com.example.android.common.logger.Log;
-
 /**
  * Created by Rick Meng on 2015/6/23.
  */
@@ -74,12 +72,12 @@ public class PickerLayer {
         paint.setTextSize(size);
     }
 
-    public void notifySelectedItemChanged(PickerLayer layer) {
-
-    }
-
     private float getScaleTextSize(float base, float transY) {
         float f = (float) (1 - Math.pow(transY / base, 2));
         return f < 0 ? 0 : f;
+    }
+
+    public int getItemHeight() {
+        return (int) (mTextBound.height() * 1.0f);
     }
 }
