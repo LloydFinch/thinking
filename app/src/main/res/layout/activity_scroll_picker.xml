@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.androidy.thinking.ScrollPickerActivity">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clickSelectCity"
+        android:text="选择城市" />
+
+    <View
+        android:id="@+id/coverBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7f000000"
+        android:clickable="true"
+        android:onClick="clickCoverBg"
+        android:visibility="invisible" />
+
+    <cn.androidy.thinking.views.ScrollPicker
+        android:id="@+id/scrollPicker"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:onClick="clickScollPicker"
+        android:visibility="invisible"></cn.androidy.thinking.views.ScrollPicker>
+
+</RelativeLayout>

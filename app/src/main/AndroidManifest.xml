@@ -57,6 +57,10 @@
             android:name=".game.pintu.PintuActivity"
             android:label="@string/title_activity_pintu" >
         </activity>
+        <activity
+            android:name=".ScrollPickerActivity"
+            android:label="@string/title_activity_scroll_picker" >
+        </activity>
     </application>
 
 </manifest>

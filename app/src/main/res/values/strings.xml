@@ -16,4 +16,5 @@
     <string name="title_activity_banner">轮播广告位</string>
     <string name="title_activity_drawable_demo">各种各样的Drawable</string>
     <string name="title_activity_pintu">拼图游戏</string>
+    <string name="title_activity_scroll_picker">滑动选择器</string>
 </resources>
