@@ -42,7 +42,7 @@ public class PickerLayer {
         canvasWidth = width;
         top = 0;
         Paint.FontMetricsInt fmi = paint.getFontMetricsInt();
-        baseline = (float) (height / 2.0f - (fmi.bottom / 2.0 + fmi.top / 2.0) + index * mTextBound.height() * 1.5f) + transY;
+        baseline = (float) (height / 2.0f - (fmi.bottom / 2.0 + fmi.top / 2.0) + index * mTextBound.height() * 1.8f) + transY;
     }
 
     private float measureText(String text, Paint paint) {
@@ -59,9 +59,7 @@ public class PickerLayer {
             paint.setColor(0xff333333);
         }
         float d = Math.abs(layer.baseline - baseline);
-        float scale = getScaleTextSize(canvasHeight * 2 / 3, d);
-        float size = paint.getTextSize();
-        paint.setTextSize(size * scale);
+        float scale = getScaleTextSize(canvasHeight / 4, d);
         paint.setAlpha((int) ((mMaxTextAlpha - mMinTextAlpha) * scale + mMinTextAlpha));
         canvas.save(Canvas.CLIP_SAVE_FLAG);
         canvas.clipRect(0, top, canvasWidth, canvasHeight);
@@ -69,7 +67,6 @@ public class PickerLayer {
         startX = canvasWidth / 2 - w / 2;//文字居中
         canvas.drawText(text.toString(), startX, baseline, paint);
         canvas.restore();
-        paint.setTextSize(size);
     }
 
     private float getScaleTextSize(float base, float transY) {

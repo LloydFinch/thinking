@@ -17,7 +17,9 @@ public class PickerLayerManager {
     private int mHeight;
     private float density = 1.0f;
     private int itemHeight;
-
+    private int selectedPosition = 0;
+    public float transY;
+    public boolean hasAutoChanged = false;
     //初始化绑定数据
     public PickerLayerManager(float density) {
         this.density = density;
@@ -39,6 +41,7 @@ public class PickerLayerManager {
 
     //初始化各个Layer的初始位置
     public void initLayerParams(Paint paint, float transY) {
+        this.transY = transY;
         int i = 0;
         for (PickerLayer layer : mPickerLayerList) {
             layer.initIndex(i++, mWidth, mHeight, paint, transY);
@@ -53,7 +56,7 @@ public class PickerLayerManager {
 
     //根据距离中线的最小距离确定当前选中的item，确保同一时间只有一个item被选中。
     private PickerLayer findSelectedLayer() {
-        int selectedPosition = 0;
+        selectedPosition = 0;
         float minDistance = mHeight;
         for (int i = 0; i < mPickerLayerList.size(); i++) {
             PickerLayer layer = mPickerLayerList.get(i);
@@ -71,10 +74,7 @@ public class PickerLayerManager {
         return itemHeight;
     }
 
-    public void fitCenterItemPosition() {
-        PickerLayer layer = findSelectedLayer();
-        float baseLine = layer.baseline;
-        float targetBaseLine = mHeight / 2 - baseLine;
-        ValueAnimator.ofFloat(baseLine,)
+    public int getSelectedIndex() {
+        return selectedPosition;
     }
 }

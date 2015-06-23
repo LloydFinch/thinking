@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
@@ -43,6 +44,7 @@ public class ScrollPicker extends View {
     // Shadows drawables
     private GradientDrawable topShadow;
     private GradientDrawable bottomShadow;
+    private float transY;
 
     public ScrollPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -258,16 +260,29 @@ public class ScrollPicker extends View {
         lastDownY = event.getY();
     }
 
-    float transY = 0;
-
     private void dispatchActionMoveEvent(MotionEvent event) {
-        transY += (event.getY() - lastDownY);
+        if (plm.hasAutoChanged) {
+            transY = plm.transY;
+            plm.hasAutoChanged = false;
+        } else {
+            transY += (event.getY() - lastDownY);
+        }
         plm.initLayerParams(mPaint, transY);
         invalidate();
         lastDownY = event.getY();
     }
 
     private void dispatchActionUpEvent(MotionEvent event) {
-        plm.fitCenterItemPosition();
+        float targetTransY = -plm.getSelectedIndex() * plm.getItemHeight() * 1.8f;
+        ValueAnimator animator = ValueAnimator.ofFloat(transY, targetTransY).setDuration(300);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                plm.initLayerParams(mPaint, (Float) animation.getAnimatedValue());
+                plm.hasAutoChanged = true;
+                invalidate();
+            }
+        });
+        animator.start();
     }
 }
