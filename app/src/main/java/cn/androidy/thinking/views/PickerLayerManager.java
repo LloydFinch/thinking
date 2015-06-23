@@ -3,6 +3,8 @@ package cn.androidy.thinking.views;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.example.android.common.logger.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,16 +37,31 @@ public class PickerLayerManager {
     }
 
     //初始化各个Layer的初始位置
-    public void initLayerParams(Paint paint) {
+    public void initLayerParams(Paint paint, float transY) {
         int i = 0;
         for (PickerLayer layer : mPickerLayerList) {
-            layer.initIndex(i++, mWidth, mHeight, paint);
+            layer.initIndex(i++, mWidth, mHeight, paint, transY);
         }
     }
 
     public void doDraw(Canvas canvas, Paint paint) {
         for (PickerLayer layer : mPickerLayerList) {
-            layer.doDraw(canvas, paint);
+            layer.doDraw(canvas, paint, findSelectedLayerIndex());
         }
+    }
+
+    //根据距离中线的最小距离确定当前选中的item，确保同一时间只有一个item被选中。
+    private int findSelectedLayerIndex() {
+        int selectedPosition = 0;
+        float minDistance = mHeight;
+        for (int i = 0; i < mPickerLayerList.size(); i++) {
+            PickerLayer layer = mPickerLayerList.get(i);
+            float distance = Math.abs(layer.canvasHeight / 2 - layer.baseline);
+            if (distance < minDistance) {
+                minDistance = distance;
+                selectedPosition = i;
+            }
+        }
+        return selectedPosition;
     }
 }

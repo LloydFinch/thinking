@@ -27,13 +27,13 @@ public class ScrollPickerActivity extends DemoDetailBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         scrollPicker = (ScrollPicker) findViewById(R.id.scrollPicker);
-        textList.add("测试item-----------------1");
-        textList.add("测试item-2");
-        textList.add("测试item-3");
-        textList.add("测试item-4");
-        textList.add("测试item-5");
-        textList.add("测试item-6");
-        textList.add("测试item-7");
+        textList.add("北京");
+        textList.add("天津");
+        textList.add("上海");
+        textList.add("广州");
+        textList.add("深圳");
+        textList.add("杭州");
+        textList.add("成都");
         scrollPicker.bindData(textList);
         coverBg = findViewById(R.id.coverBg);
     }

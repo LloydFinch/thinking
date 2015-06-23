@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
@@ -25,6 +26,7 @@ public class ScrollPicker extends View {
     private Paint mPaint;
     private int mColorText = 0xff333333;
     private boolean isDoingAnimation = false;
+    private float lastDownY;
 
     public ScrollPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -62,7 +64,7 @@ public class ScrollPicker extends View {
         int w = getWidth();
         plm.initCanvasTotalArea(w, h);
         plm.bindData(mDataList);
-        plm.initLayerParams(mPaint);
+        plm.initLayerParams(mPaint, 0);
     }
 
     @Override
@@ -134,5 +136,39 @@ public class ScrollPicker extends View {
             }
         }).start();
         return true;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                dispatchActionDownEvent(event);
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                dispatchActionMoveEvent(event);
+                return true;
+            case MotionEvent.ACTION_UP:
+                dispatchActionUpEvent(event);
+                return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private void dispatchActionDownEvent(MotionEvent event) {
+        lastDownY = event.getY();
+    }
+
+    float transY = 0;
+
+    private void dispatchActionMoveEvent(MotionEvent event) {
+        transY += (event.getY() - lastDownY);
+        plm.initLayerParams(mPaint, transY);
+        invalidate();
+        lastDownY = event.getY();
+    }
+
+    private void dispatchActionUpEvent(MotionEvent event) {
+        lastDownY = event.getY();
     }
 }
