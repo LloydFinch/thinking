@@ -56,7 +56,6 @@ public class PickerLayerManager {
 
     //根据距离中线的最小距离确定当前选中的item，确保同一时间只有一个item被选中。
     private PickerLayer findSelectedLayer() {
-        selectedPosition = 0;
         float minDistance = mHeight;
         for (int i = 0; i < mPickerLayerList.size(); i++) {
             PickerLayer layer = mPickerLayerList.get(i);
