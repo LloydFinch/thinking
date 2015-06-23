@@ -54,16 +54,14 @@ public class PickerLayer {
         return w;
     }
 
-    public void doDraw(Canvas canvas, Paint paint, int selectedLayerIndex) {
-        boolean selected = Math.abs(canvasHeight / 2 - baseline) < mTextBound.height() * 0.65f;
-        if (selectedLayerIndex == mIndex) {
-            Log.d("mwp", "选中了--->" + mIndex);
+    public void doDraw(Canvas canvas, Paint paint, PickerLayer layer) {
+        if (layer == this) {
             paint.setColor(0xffed145b);
         } else {
             paint.setColor(0xff333333);
         }
-        float d = 1;
-        float scale = getScaleTextSize(canvasHeight / 4.0f, d);
+        float d = Math.abs(layer.baseline - baseline);
+        float scale = getScaleTextSize(canvasHeight * 2 / 3, d);
         float size = paint.getTextSize();
         paint.setTextSize(size * scale);
         paint.setAlpha((int) ((mMaxTextAlpha - mMinTextAlpha) * scale + mMinTextAlpha));
@@ -80,15 +78,8 @@ public class PickerLayer {
 
     }
 
-    /**
-     * 抛物线
-     *
-     * @param zero 零点坐标
-     * @param x    偏移量
-     * @return scale
-     */
-    private float getScaleTextSize(float zero, float x) {
-        float f = (float) (1 - Math.pow(x / zero, 2));
+    private float getScaleTextSize(float base, float transY) {
+        float f = (float) (1 - Math.pow(transY / base, 2));
         return f < 0 ? 0 : f;
     }
 }

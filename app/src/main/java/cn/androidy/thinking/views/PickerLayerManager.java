@@ -46,12 +46,12 @@ public class PickerLayerManager {
 
     public void doDraw(Canvas canvas, Paint paint) {
         for (PickerLayer layer : mPickerLayerList) {
-            layer.doDraw(canvas, paint, findSelectedLayerIndex());
+            layer.doDraw(canvas, paint, findSelectedLayer());
         }
     }
 
     //根据距离中线的最小距离确定当前选中的item，确保同一时间只有一个item被选中。
-    private int findSelectedLayerIndex() {
+    private PickerLayer findSelectedLayer() {
         int selectedPosition = 0;
         float minDistance = mHeight;
         for (int i = 0; i < mPickerLayerList.size(); i++) {
@@ -62,6 +62,6 @@ public class PickerLayerManager {
                 selectedPosition = i;
             }
         }
-        return selectedPosition;
+        return mPickerLayerList.get(selectedPosition);
     }
 }
