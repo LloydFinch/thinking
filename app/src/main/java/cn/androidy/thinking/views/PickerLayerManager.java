@@ -3,6 +3,8 @@ package cn.androidy.thinking.views;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.nineoldandroids.animation.ValueAnimator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,5 +69,12 @@ public class PickerLayerManager {
 
     public int getItemHeight() {
         return itemHeight;
+    }
+
+    public void fitCenterItemPosition() {
+        PickerLayer layer = findSelectedLayer();
+        float baseLine = layer.baseline;
+        float targetBaseLine = mHeight / 2 - baseLine;
+        ValueAnimator.ofFloat(baseLine,)
     }
 }

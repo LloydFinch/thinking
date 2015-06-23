@@ -268,6 +268,6 @@ public class ScrollPicker extends View {
     }
 
     private void dispatchActionUpEvent(MotionEvent event) {
-        lastDownY = event.getY();
+        plm.fitCenterItemPosition();
     }
 }
