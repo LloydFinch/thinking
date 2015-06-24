@@ -52,6 +52,7 @@ public class ScrollPicker extends View {
     private float autoTransY;
     private VelocityTracker mVelocityTracker;
     private int mMaxVelocity;
+    private static final int FLING_SPEED = 1000;
 
     public ScrollPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -335,8 +336,12 @@ public class ScrollPicker extends View {
     }
 
     private void dispatchActionUpEvent(MotionEvent event) {
-        onFling(mVelocityTracker.getYVelocity());
-
+        float yspeed = mVelocityTracker.getYVelocity();
+        if (Math.abs(yspeed) > FLING_SPEED) {
+            onFling(mVelocityTracker.getYVelocity());
+        } else {
+            fitSelection();
+        }
     }
 
     private void fitSelection() {
