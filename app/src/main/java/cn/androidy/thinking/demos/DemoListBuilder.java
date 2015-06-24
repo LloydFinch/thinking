@@ -29,6 +29,7 @@ public class DemoListBuilder {
     public static List<IDemoEntry> getDemoEntryList() {
         ArrayList<IDemoEntry> result = new ArrayList<IDemoEntry>();
         result.add(new AllDemo(IDemoEntry.DemoFamily.ALL));
+        result.add(new AllDemo(IDemoEntry.DemoFamily.ME));
         result.add(new AllDemo(IDemoEntry.DemoFamily.SQUARE));
         result.add(new AllDemo(IDemoEntry.DemoFamily.SINGWHATIWANNA));
         return result;

@@ -8,7 +8,7 @@ import cn.androidy.thinking.WeatherActivity;
 /**
  * Created by Rick Meng on 2015/6/17.
  */
-public class WeatherDemo implements  IDemoEntry{
+public class WeatherDemo implements IDemoEntry {
 
     @Override
     public String getDemoTitle() {
@@ -22,6 +22,6 @@ public class WeatherDemo implements  IDemoEntry{
 
     @Override
     public boolean isMember(DemoFamily demoFamily) {
-        return demoFamily == DemoFamily.ALL;
+        return demoFamily == DemoFamily.ALL || demoFamily == DemoFamily.ME;
     }
 }

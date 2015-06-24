@@ -21,6 +21,6 @@ public class ThreadPoolDemo implements IDemoEntry {
     }
     @Override
     public boolean isMember(DemoFamily demoFamily) {
-        return demoFamily == DemoFamily.ALL;
+        return demoFamily == DemoFamily.ALL || demoFamily == DemoFamily.ME;
     }
 }
