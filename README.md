@@ -5,6 +5,10 @@
 
 ![lyric-demo](http://img.blog.csdn.net/20150619102828712)
 
+####原创效果二：底部滚轮选择器：
+
+![2](http://img.blog.csdn.net/20150624122543591)
+
 
 ###推荐网站
 
