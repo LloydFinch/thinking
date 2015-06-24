@@ -25,6 +25,7 @@ import com.ryanharter.viewpager.PagerAdapter;
 import com.ryanharter.viewpager.ViewPager;
 import com.ryanharter.viewpager.ViewPager.OnPageChangeListener;
 
+import cn.androidy.thinking.drawables.DrawableBuilder;
 import cn.androidy.thinking.utils.DensityUtil;
 
 public class MojiGuidepageActivity extends FragmentActivity implements
@@ -194,9 +195,10 @@ public class MojiGuidepageActivity extends FragmentActivity implements
                     t2_icon1.setVisibility(View.INVISIBLE);
                 }
 
-                t1_icon1.setImageResource(R.drawable.t1_frame_animation);
-                t1_icon1_animationDrawable = (AnimationDrawable) t1_icon1
-                        .getDrawable();
+                t1_icon1_animationDrawable = DrawableBuilder.createAnimationDrawable(MojiGuidepageActivity.this,
+                        new DrawableBuilder.IDrawableFrame[]{new DrawableBuilder.SimpleFrame(R.drawable.tutorial1_icon1, 200),
+                                new DrawableBuilder.SimpleFrame(R.drawable.tutorial1_icon2, 200)}, false);
+                t1_icon1.setImageDrawable(t1_icon1_animationDrawable);
                 t1_icon1_animationDrawable.start();
 
                 Animation animation1 = AnimationUtils.loadAnimation(
