@@ -8,8 +8,12 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.animation.LinearInterpolator;
 
+import com.example.android.common.logger.Log;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
@@ -46,6 +50,8 @@ public class ScrollPicker extends View {
     private GradientDrawable bottomShadow;
     private float motionTransY;
     private float autoTransY;
+    private VelocityTracker mVelocityTracker;
+    private int mMaxVelocity;
 
     public ScrollPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -69,6 +75,40 @@ public class ScrollPicker extends View {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mColorText);
         mPaint.setTextSize(20 * dm.density);
+        mVelocityTracker = VelocityTracker.obtain();
+        mMaxVelocity = ViewConfiguration.get(getContext()).getScaledMaximumFlingVelocity();
+    }
+
+    /**
+     * @param event 向VelocityTracker添加MotionEvent
+     * @see android.view.VelocityTracker#obtain()
+     * @see android.view.VelocityTracker#addMovement(MotionEvent)
+     */
+
+    private void acquireVelocityTracker(final MotionEvent event) {
+
+        if (null == mVelocityTracker) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(event);
+
+    }
+
+    /**
+     * 释放VelocityTracker
+     *
+     * @see android.view.VelocityTracker#clear()
+     * @see android.view.VelocityTracker#recycle()
+     */
+
+    private void releaseVelocityTracker() {
+
+        if (null != mVelocityTracker) {
+            mVelocityTracker.clear();
+            mVelocityTracker.recycle();
+            mVelocityTracker = null;
+        }
+
     }
 
     public void bindData(List<Object> dataList) {
@@ -243,18 +283,39 @@ public class ScrollPicker extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
+        acquireVelocityTracker(event);
+        final VelocityTracker verTracker = mVelocityTracker;
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 dispatchActionDownEvent(event);
                 return true;
             case MotionEvent.ACTION_MOVE:
+                verTracker.computeCurrentVelocity(1000, mMaxVelocity);
+                Log.d("mwp", recodeInfo(verTracker.getXVelocity(), verTracker.getYVelocity()));
                 dispatchActionMoveEvent(event);
                 return true;
             case MotionEvent.ACTION_UP:
                 dispatchActionUpEvent(event);
+                releaseVelocityTracker();
                 return true;
+            case MotionEvent.ACTION_CANCEL:
+                releaseVelocityTracker();
+                break;
         }
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * 记录当前速度
+     *
+     * @param velocityX x轴速度
+     * @param velocityY y轴速度
+     */
+    private static final String sFormatStr = "velocityX=%f   velocityY=%f";
+
+    private String recodeInfo(final float velocityX, final float velocityY) {
+        final String info = String.format(sFormatStr, velocityX, velocityY);
+        return info;
     }
 
     private void dispatchActionDownEvent(MotionEvent event) {
@@ -274,6 +335,11 @@ public class ScrollPicker extends View {
     }
 
     private void dispatchActionUpEvent(MotionEvent event) {
+        onFling(mVelocityTracker.getYVelocity());
+
+    }
+
+    private void fitSelection() {
         float targetTransY = -plm.getSelectedIndex() * plm.getItemHeight() * PickerLayer.ITEM_SCALE;
         ValueAnimator animator = ValueAnimator.ofFloat(motionTransY, targetTransY).setDuration(300);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -293,6 +359,47 @@ public class ScrollPicker extends View {
             @Override
             public void onAnimationEnd(Animator animation) {
                 motionTransY = autoTransY;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animator.start();
+    }
+
+    private void onFling(float yVelocity) {
+        float distance = Math.min(100 * dm.density, Math.abs(yVelocity * 0.3f));
+        if (yVelocity < 0) {
+            distance = -distance;
+        }
+        float targetTransY = motionTransY + distance;
+        ValueAnimator animator = ValueAnimator.ofFloat(motionTransY, targetTransY).setDuration((long) (Math.abs(distance / yVelocity) * 1000));
+        animator.setInterpolator(new LinearInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                autoTransY = (Float) animation.getAnimatedValue();
+                plm.initLayerParams(mPaint, autoTransY);
+                invalidate();
+            }
+        });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                motionTransY = autoTransY;
+                fitSelection();
             }
 
             @Override
