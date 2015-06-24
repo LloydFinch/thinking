@@ -61,6 +61,11 @@
             android:name=".ScrollPickerActivity"
             android:label="@string/title_activity_scroll_picker" >
         </activity>
+        <activity
+            android:name=".MojiGuidepageActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:label="@string/title_activity_moji_guidepage" >
+        </activity>
     </application>
 
 </manifest>

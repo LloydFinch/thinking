@@ -9,7 +9,8 @@ import java.util.List;
  */
 public class DemoListBuilder {
     private static final IDemoEntry DEMO_ARRAY[] = new IDemoEntry[]{new ThreadPoolDemo(), new LyricDemo(),
-            new SquareTimesDemo(), new RippleDemo(), new BannerDemo(), new DrawableDemo(), new PintuDemo(), new ScrollPickerDemo()};
+            new SquareTimesDemo(), new RippleDemo(), new BannerDemo(), new DrawableDemo(), new PintuDemo(),
+            new ScrollPickerDemo(), new MojiGuidepageDemo()};
 
     public static List<IDemoEntry> buildDemoList(IDemoEntry.DemoFamily demoFamily) {
         if (demoFamily == null || demoFamily == IDemoEntry.DemoFamily.ALL) {
