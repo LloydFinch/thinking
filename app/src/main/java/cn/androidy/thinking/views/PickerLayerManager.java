@@ -18,8 +18,6 @@ public class PickerLayerManager {
     private float density = 1.0f;
     private int itemHeight;
     private int selectedPosition = 0;
-    public float transY;
-    public boolean hasAutoChanged = false;
     //初始化绑定数据
     public PickerLayerManager(float density) {
         this.density = density;
@@ -41,7 +39,6 @@ public class PickerLayerManager {
 
     //初始化各个Layer的初始位置
     public void initLayerParams(Paint paint, float transY) {
-        this.transY = transY;
         int i = 0;
         for (PickerLayer layer : mPickerLayerList) {
             layer.initIndex(i++, mWidth, mHeight, paint, transY);

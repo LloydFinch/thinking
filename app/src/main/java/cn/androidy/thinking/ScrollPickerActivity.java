@@ -69,6 +69,22 @@ public class ScrollPickerActivity extends DemoDetailBaseActivity {
 
     }
 
+    public void clickSelectBj(View v) {
+        selectIndex(0);
+    }
+
+    public void clickSelectSz(View v) {
+        selectIndex(4);
+    }
+
+    public void clickSelectCd(View v) {
+        selectIndex(6);
+    }
+
+    private void selectIndex(int index) {
+        scrollPicker.selectIndex(index);
+    }
+
     public void clickSelectCity(View v) {
         boolean show = scrollPicker.show();
         if (show) {

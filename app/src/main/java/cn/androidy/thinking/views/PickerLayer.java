@@ -8,6 +8,7 @@ import android.graphics.Rect;
  * Created by Rick Meng on 2015/6/23.
  */
 public class PickerLayer {
+    public static float ITEM_SCALE = 1.8f;
     private Rect mTextBound = new Rect();
     public Object text;
     public int color;
@@ -42,7 +43,7 @@ public class PickerLayer {
         canvasWidth = width;
         top = 0;
         Paint.FontMetricsInt fmi = paint.getFontMetricsInt();
-        baseline = (float) (height / 2.0f - (fmi.bottom / 2.0 + fmi.top / 2.0) + index * mTextBound.height() * 1.8f) + transY;
+        baseline = (float) (height / 2.0f - (fmi.bottom / 2.0 + fmi.top / 2.0) + index * mTextBound.height() * ITEM_SCALE) + transY;
     }
 
     private float measureText(String text, Paint paint) {

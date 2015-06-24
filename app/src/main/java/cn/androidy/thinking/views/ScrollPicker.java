@@ -44,7 +44,8 @@ public class ScrollPicker extends View {
     // Shadows drawables
     private GradientDrawable topShadow;
     private GradientDrawable bottomShadow;
-    private float transY;
+    private float motionTransY;
+    private float autoTransY;
 
     public ScrollPicker(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -261,26 +262,82 @@ public class ScrollPicker extends View {
     }
 
     private void dispatchActionMoveEvent(MotionEvent event) {
-        if (plm.hasAutoChanged) {
-            transY = plm.transY;
-            plm.hasAutoChanged = false;
+        if (autoTransY != 0) {
+            motionTransY = autoTransY;
+            autoTransY = 0;
         } else {
-            transY += (event.getY() - lastDownY);
+            motionTransY += (event.getY() - lastDownY);
         }
-        plm.initLayerParams(mPaint, transY);
+        plm.initLayerParams(mPaint, motionTransY);
         invalidate();
         lastDownY = event.getY();
     }
 
     private void dispatchActionUpEvent(MotionEvent event) {
-        float targetTransY = -plm.getSelectedIndex() * plm.getItemHeight() * 1.8f;
-        ValueAnimator animator = ValueAnimator.ofFloat(transY, targetTransY).setDuration(300);
+        float targetTransY = -plm.getSelectedIndex() * plm.getItemHeight() * PickerLayer.ITEM_SCALE;
+        ValueAnimator animator = ValueAnimator.ofFloat(motionTransY, targetTransY).setDuration(300);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                plm.initLayerParams(mPaint, (Float) animation.getAnimatedValue());
-                plm.hasAutoChanged = true;
+                autoTransY = (Float) animation.getAnimatedValue();
+                plm.initLayerParams(mPaint, autoTransY);
                 invalidate();
+            }
+        });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                motionTransY = autoTransY;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animator.start();
+    }
+
+    public void selectIndex(int index) {
+        float targetTransY = -index * plm.getItemHeight() * PickerLayer.ITEM_SCALE;
+        ValueAnimator animator = ValueAnimator.ofFloat(motionTransY, targetTransY).setDuration(300);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                autoTransY = (Float) animation.getAnimatedValue();
+                plm.initLayerParams(mPaint, autoTransY);
+                invalidate();
+            }
+        });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                motionTransY = autoTransY;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
             }
         });
         animator.start();

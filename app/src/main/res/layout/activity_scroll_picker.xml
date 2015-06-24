@@ -5,12 +5,6 @@
     tools:context="cn.androidy.thinking.ScrollPickerActivity">
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="clickSelectCity"
-        android:text="选择城市" />
-
     <View
         android:id="@+id/coverBg"
         android:layout_width="match_parent"
@@ -30,4 +24,36 @@
         android:onClick="clickScollPicker"
         android:visibility="invisible"></cn.androidy.thinking.views.ScrollPicker>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="clickSelectCity"
+            android:text="选择城市" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="clickSelectBj"
+            android:text="选择北京" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="clickSelectSz"
+            android:text="选择深圳" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="clickSelectCd"
+            android:text="选择成都" />
+    </LinearLayout>
 </RelativeLayout>
