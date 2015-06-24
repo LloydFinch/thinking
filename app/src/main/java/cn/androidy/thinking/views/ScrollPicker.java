@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.animation.LinearInterpolator;
 
-import com.example.android.common.logger.Log;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
@@ -292,7 +291,6 @@ public class ScrollPicker extends View {
                 return true;
             case MotionEvent.ACTION_MOVE:
                 verTracker.computeCurrentVelocity(1000, mMaxVelocity);
-                Log.d("mwp", recodeInfo(verTracker.getXVelocity(), verTracker.getYVelocity()));
                 dispatchActionMoveEvent(event);
                 return true;
             case MotionEvent.ACTION_UP:
