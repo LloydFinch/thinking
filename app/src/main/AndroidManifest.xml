@@ -38,10 +38,6 @@
             android:label="@string/title_activity_calendar_picker_view" >
         </activity>
         <activity
-            android:name=".DemoDetailBaseActivity"
-            android:label="@string/title_activity_demo_detail_base" >
-        </activity>
-        <activity
             android:name=".RippleActivity"
             android:label="@string/title_activity_ripple" >
         </activity>
