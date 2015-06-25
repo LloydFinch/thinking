@@ -1,5 +1,8 @@
 package cn.androidy.thinking.views;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,12 +14,9 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewPropertyAnimator;
 import android.view.animation.LinearInterpolator;
 
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.List;
 
@@ -170,8 +170,9 @@ public class ScrollPicker extends View {
         if (isDoingAnimation) {
             return false;
         }
-        ViewHelper.setTranslationY(this, 480);
-        ViewPropertyAnimator.animate(this).translationY(0).setDuration(300).setListener(new Animator.AnimatorListener() {
+        ObjectAnimator objectAnimator =
+                ObjectAnimator.ofInt(this, "translationY", 480, 0).setDuration(300);
+        objectAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 isDoingAnimation = true;
@@ -194,7 +195,8 @@ public class ScrollPicker extends View {
             public void onAnimationRepeat(Animator animation) {
                 isDoingAnimation = true;
             }
-        }).start();
+        });
+        objectAnimator.start();
         return true;
     }
 
@@ -203,7 +205,9 @@ public class ScrollPicker extends View {
         if (isDoingAnimation) {
             return false;
         }
-        ViewPropertyAnimator.animate(this).translationY(480).setDuration(300).setListener(new Animator.AnimatorListener() {
+        ObjectAnimator objectAnimator =
+                ObjectAnimator.ofInt(this, "translationY", 0, 480).setDuration(300);
+        objectAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 isDoingAnimation = true;
@@ -226,7 +230,8 @@ public class ScrollPicker extends View {
             public void onAnimationRepeat(Animator animation) {
                 isDoingAnimation = true;
             }
-        }).start();
+        });
+        objectAnimator.start();
         return true;
     }
 

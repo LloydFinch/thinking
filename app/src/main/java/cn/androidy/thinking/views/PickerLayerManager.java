@@ -3,8 +3,6 @@ package cn.androidy.thinking.views;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.nineoldandroids.animation.ValueAnimator;
-
 import java.util.ArrayList;
 import java.util.List;
 
