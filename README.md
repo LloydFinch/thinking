@@ -32,6 +32,15 @@
 
 #####2.[Android View系统解析(下)][article-details-38426471]
 
+####教科书般的动画原理及用法解析
+
+#####1.[Android属性动画完全解析(上)，初识属性动画的基本用法](http://blog.csdn.net/guolin_blog/article/details/43536355)
+
+#####2.[Android属性动画完全解析(中)，ValueAnimator和ObjectAnimator的高级用法](http://blog.csdn.net/guolin_blog/article/details/43816093)
+
+#####3.[Android属性动画完全解析(下)，Interpolator和ViewPropertyAnimator的用法](http://blog.csdn.net/guolin_blog/article/details/44171115)
+
+
 
 
 [article-details-38168103]:	http://blog.csdn.net/singwhatiwanna/article/details/38168103
