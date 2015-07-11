@@ -59,8 +59,12 @@
         </activity>
         <activity
             android:name=".MojiGuidepageActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:label="@string/title_activity_moji_guidepage" >
+            android:label="@string/title_activity_moji_guidepage"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".CurveActivity"
+            android:label="@string/title_activity_curve" >
         </activity>
     </application>
 

@@ -18,4 +18,5 @@
     <string name="title_activity_pintu">拼图游戏</string>
     <string name="title_activity_scroll_picker">滑动选择器</string>
     <string name="title_activity_moji_guidepage">墨迹天气引导页</string>
+    <string name="title_activity_curve">各种各样的曲线</string>
 </resources>
