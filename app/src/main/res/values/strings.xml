@@ -2,6 +2,7 @@
     <string name="app_name">Android前线</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">设置</string>
+    <string name="original_link">原文链接</string>
     <string name="search">搜索</string>
     <string name="menu">菜单</string>
     <string name="about">关于</string>

@@ -1,21 +1,26 @@
 package cn.androidy.thinking;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import cn.androidy.thinking.demos.ThirdParthDemo;
 import cn.androidy.thinking.views.LuckyPanView;
 
 
 public class LuckPanActivity extends DemoDetailBaseActivity {
     private LuckyPanView mLuckyPanView;
     private ImageView mStartBtn;
+    private String originalUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        originalUrl = getIntent().getStringExtra(ThirdParthDemo.KEY_ORIGINAL_URL);
         mLuckyPanView = (LuckyPanView) findViewById(R.id.id_luckypan);
         mStartBtn = (ImageView) findViewById(R.id.id_start_btn);
 
@@ -66,6 +71,11 @@ public class LuckPanActivity extends DemoDetailBaseActivity {
             return true;
         } else if (id == android.R.id.home) {
             finish();
+            return true;
+        } else if (id == R.id.action_original_link) {
+            Uri uri = Uri.parse(originalUrl);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
             return true;
         }
 

@@ -1,6 +1,8 @@
 package cn.androidy.thinking;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,7 +21,7 @@ import java.util.TimerTask;
 
 
 public class BannerActivity extends DemoDetailBaseActivity implements Runnable {
-
+    private String originalUrl;
     private ViewPager mBanner;
     private BannerAdapter mBannerAdapter;
     private ImageView[] mIndicators;
@@ -197,6 +199,11 @@ public class BannerActivity extends DemoDetailBaseActivity implements Runnable {
             return true;
         } else if (id == android.R.id.home) {
             finish();
+            return true;
+        } else if (id == R.id.action_original_link) {
+            Uri uri = Uri.parse(originalUrl);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
             return true;
         }
 

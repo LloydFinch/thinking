@@ -8,31 +8,27 @@ import cn.androidy.thinking.LuckPanActivity;
 /**
  * Created by Rick Meng on 2015/7/11.
  */
-public class LuckyPanDemo extends ThirdParthDemo {
+public abstract class ThirdParthDemo extends SimpleDemo {
+    public static final String KEY_ORIGINAL_URL = "key_original_url";
+
     @Override
     public String getDemoTitle() {
-        return "抽奖转盘";
+        return null;
     }
 
     @Override
     public void demonstrate(Context context) {
-        Intent intent = new Intent(context, LuckPanActivity.class);
+        Intent intent = new Intent(context, getTargetActivityClass());
         intent.putExtra(KEY_ORIGINAL_URL, getOriginalUrl());
         context.startActivity(intent);
     }
 
     @Override
     public boolean isMember(DemoFamily demoFamily) {
-        return demoFamily == DemoFamily.ALL || demoFamily == DemoFamily.ZHY;
+        return false;
     }
 
-    @Override
-    public String getOriginalUrl() {
-        return "http://blog.csdn.net/lmj623565791/article/details/41722441";
-    }
+    public abstract String getOriginalUrl();
 
-    @Override
-    public Class<?> getTargetActivityClass() {
-        return LuckPanActivity.class;
-    }
+    public abstract Class<?> getTargetActivityClass();
 }
