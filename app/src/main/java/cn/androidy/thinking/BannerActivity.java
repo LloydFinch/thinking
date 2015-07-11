@@ -19,6 +19,8 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.androidy.thinking.demos.ThirdParthDemo;
+
 
 public class BannerActivity extends DemoDetailBaseActivity implements Runnable {
     private String originalUrl;
@@ -51,6 +53,7 @@ public class BannerActivity extends DemoDetailBaseActivity implements Runnable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        originalUrl = getIntent().getStringExtra(ThirdParthDemo.KEY_ORIGINAL_URL);
         initView();
         mTimer.schedule(mTimerTask, 5000, 3000);
     }
