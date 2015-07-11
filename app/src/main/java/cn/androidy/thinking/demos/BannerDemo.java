@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import cn.androidy.thinking.BannerActivity;
-import cn.androidy.thinking.LyricViewActivity;
 
 /**
  * Created by Rick Meng on 2015/6/18.
@@ -22,6 +21,6 @@ public class BannerDemo implements IDemoEntry {
 
     @Override
     public boolean isMember(DemoFamily demoFamily) {
-        return demoFamily == DemoFamily.SINGWHATIWANNA || demoFamily == DemoFamily.ALL;
+        return demoFamily == DemoFamily.RENYUGANG || demoFamily == DemoFamily.ALL;
     }
 }

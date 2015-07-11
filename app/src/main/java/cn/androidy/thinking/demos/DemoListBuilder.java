@@ -10,7 +10,7 @@ import java.util.List;
 public class DemoListBuilder {
     private static final IDemoEntry DEMO_ARRAY[] = new IDemoEntry[]{new ThreadPoolDemo(), new LyricDemo(),
             new SquareTimesDemo(), new RippleDemo(), new BannerDemo(), new DrawableDemo(), new PintuDemo(),
-            new ScrollPickerDemo(), new MojiGuidepageDemo(), new CurveDemo()};
+            new ScrollPickerDemo(), new MojiGuidepageDemo(), new CurveDemo(), new LuckyPanDemo()};
 
     public static List<IDemoEntry> buildDemoList(IDemoEntry.DemoFamily demoFamily) {
         if (demoFamily == null || demoFamily == IDemoEntry.DemoFamily.ALL) {
@@ -31,7 +31,8 @@ public class DemoListBuilder {
         result.add(new AllDemo(IDemoEntry.DemoFamily.ALL));
         result.add(new AllDemo(IDemoEntry.DemoFamily.ME));
         result.add(new AllDemo(IDemoEntry.DemoFamily.SQUARE));
-        result.add(new AllDemo(IDemoEntry.DemoFamily.SINGWHATIWANNA));
+        result.add(new AllDemo(IDemoEntry.DemoFamily.RENYUGANG));
+        result.add(new AllDemo(IDemoEntry.DemoFamily.ZHY));
         return result;
     }
 }

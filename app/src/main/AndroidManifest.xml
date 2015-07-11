@@ -66,6 +66,10 @@
             android:name=".CurveActivity"
             android:label="@string/title_activity_curve" >
         </activity>
+        <activity
+            android:name=".LuckPanActivity"
+            android:label="@string/title_activity_luck_pan" >
+        </activity>
     </application>
 
 </manifest>

@@ -17,7 +17,7 @@ public interface IDemoEntry {
     public boolean isMember(DemoFamily demoFamily);
 
     public static enum DemoFamily {
-        SQUARE("Square开源"), ALL("全部Demo"), SINGWHATIWANNA("任玉刚singwhatiwanna"), ME("原创Demo");
+        SQUARE("Square开源"), ALL("全部Demo"), RENYUGANG("任玉刚"), ME("原创Demo"), ZHY("张洪洋");
         private String name;
 
         private DemoFamily(String name) {
@@ -31,8 +31,10 @@ public interface IDemoEntry {
         public static DemoFamily getDemoFamilyFromKeyword(String keyword) {
             if (SQUARE.getName().equals(keyword)) {
                 return SQUARE;
-            } else if (SINGWHATIWANNA.getName().equals(keyword)) {
-                return SINGWHATIWANNA;
+            } else if (RENYUGANG.getName().equals(keyword)) {
+                return RENYUGANG;
+            } else if (ZHY.getName().equals(keyword)) {
+                return ZHY;
             } else if (ME.getName().equals(keyword)) {
                 return ME;
             } else {
