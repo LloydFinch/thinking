@@ -70,6 +70,10 @@
             android:name=".LuckPanActivity"
             android:label="@string/title_activity_luck_pan" >
         </activity>
+        <activity
+            android:name=".SectorProgressBarActivity"
+            android:label="@string/title_activity_sector_progress_bar" >
+        </activity>
     </application>
 
 </manifest>

@@ -20,5 +20,6 @@
     <string name="title_activity_scroll_picker">滑动选择器</string>
     <string name="title_activity_moji_guidepage">墨迹天气引导页</string>
     <string name="title_activity_curve">各种各样的曲线</string>
-    <string name="title_activity_luck_pan">LuckPanActivity</string>
+    <string name="title_activity_luck_pan">转盘抽奖</string>
+    <string name="title_activity_sector_progress_bar">扇形进度条</string>
 </resources>
