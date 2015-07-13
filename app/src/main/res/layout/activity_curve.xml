@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="cn.androidy.thinking.CurveActivity">
 
-    <cn.androidy.thinking.views.MoonsetCurveView
+    <cn.androidy.thinking.views.TemperatureCurveView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
