@@ -2,15 +2,18 @@ package cn.androidy.thinking.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cn.androidy.thinking.charting.ChartingUtils;
 import cn.androidy.thinking.charting.data.Entry;
 
 public class TemperatureCurveView extends View {
@@ -20,9 +23,12 @@ public class TemperatureCurveView extends View {
      * main paint object used for rendering
      */
     protected Paint mRenderPaint;
+    protected Paint textPaint;
     protected Path cubicPath = new Path();
     protected Path cubicFillPath = new Path();
     protected int xIndexWidth;
+    protected DisplayMetrics dm;
+    protected float mRange;
 
     public TemperatureCurveView(Context context) {
         this(context, null);
@@ -30,15 +36,21 @@ public class TemperatureCurveView extends View {
 
     public TemperatureCurveView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        dm = getResources().getDisplayMetrics();
         mRenderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRenderPaint.setStyle(Paint.Style.FILL);
         mRenderPaint.setStrokeWidth(3);
+
+        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setStyle(Paint.Style.FILL);
+        textPaint.setTextSize(12 * dm.density);
+
         Random random = new Random();
-        int baseY = getResources().getDisplayMetrics().heightPixels / 2;
         for (int i = 0; i < 10; i++) {
-            entries.add(new Entry(baseY + 10 * random.nextInt(10), i));
+            entries.add(new Entry(10 * random.nextInt(10), i));
         }
-        xIndexWidth = getResources().getDisplayMetrics().widthPixels / entries.size();
+        mRange = ChartingUtils.getRange(entries);
+        xIndexWidth = dm.widthPixels / (entries.size() - 1);
     }
 
     @Override
@@ -46,8 +58,8 @@ public class TemperatureCurveView extends View {
         int minx = 0;
         int maxx = entries.size();
 
-        float phaseX = 1;
-        float phaseY = 1;
+        int phaseX = 1;
+        int phaseY = 1;
 
         float intensity = 0.2f;
 
@@ -79,8 +91,8 @@ public class TemperatureCurveView extends View {
             // the first cubic
             cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.getVal() + prevDy) * phaseY,
                     xIndexWidth * (cur.getXIndex() - curDx),
-                    (cur.getVal() - curDy) * phaseY, cur.getXIndex() * xIndexWidth, cur.getVal() * phaseY);
-
+                    (-curDy) * phaseY, cur.getXIndex() * xIndexWidth, cur.getVal() * phaseY);
+            canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.getVal() * phaseY, textPaint);
             for (int j = minx + 1, count = Math.min(size, entries.size() - 1); j < count; j++) {
 
                 prevPrev = entries.get(j == 1 ? 0 : j - 2);
@@ -96,6 +108,7 @@ public class TemperatureCurveView extends View {
                 cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.getVal() + prevDy) * phaseY,
                         xIndexWidth * (cur.getXIndex() - curDx),
                         (cur.getVal() - curDy) * phaseY, cur.getXIndex() * xIndexWidth, cur.getVal() * phaseY);
+                canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.getVal() * phaseY, textPaint);
             }
 
             if (size > entries.size() - 1) {
@@ -115,8 +128,16 @@ public class TemperatureCurveView extends View {
                 cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.getVal() + prevDy) * phaseY,
                         xIndexWidth * (cur.getXIndex() - curDx),
                         (cur.getVal() - curDy) * phaseY, cur.getXIndex() * xIndexWidth, cur.getVal() * phaseY);
+                canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.getVal() * phaseY, textPaint);
             }
         }
+
+
+        cubicFillPath.reset();
+        cubicFillPath.addPath(cubicPath);
+        // create a new path, this is bad for performance
+        drawCubicFill(canvas, cubicFillPath, 0, size);
+
         mRenderPaint.setColor(0xffed145b);
 
         mRenderPaint.setStyle(Paint.Style.STROKE);
@@ -124,5 +145,23 @@ public class TemperatureCurveView extends View {
         canvas.drawPath(cubicPath, mRenderPaint);
 
         mRenderPaint.setPathEffect(null);
+    }
+
+    protected void drawCubicFill(Canvas canvas, Path spline,
+                                 int from, int to) {
+        float fillMin = 9;
+        spline.lineTo((to - 1) * xIndexWidth, fillMin * xIndexWidth);
+        spline.lineTo(from * xIndexWidth, fillMin * xIndexWidth);
+        spline.close();
+
+        mRenderPaint.setStyle(Paint.Style.FILL);
+
+        mRenderPaint.setColor(Color.BLUE);
+        // filled is drawn with less alpha
+        mRenderPaint.setAlpha(80);
+
+        canvas.drawPath(spline, mRenderPaint);
+
+        mRenderPaint.setAlpha(255);
     }
 }
