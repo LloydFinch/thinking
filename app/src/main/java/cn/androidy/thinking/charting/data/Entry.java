@@ -1,44 +1,56 @@
 
 package cn.androidy.thinking.charting.data;
 
+import com.example.android.common.logger.Log;
+
 /**
  * Class representing one entry in the chart. Might contain multiple values.
  * Might only contain a single value depending on the used constructor.
- * 
+ *
  * @author Philipp Jahoda
  */
 public class Entry {
-
-    /** the actual value */
+    private EntryScreen entryScreen;
+    /**
+     * the actual value
+     */
     private float mVal = 0f;
 
-    /** the index on the x-axis */
+    /**
+     * the index on the x-axis
+     */
     private int mXIndex = 0;
 
-    /** optional spot for additional data this Entry represents */
+    /**
+     * optional spot for additional data this Entry represents
+     */
     private Object mData = null;
 
     /**
      * A Entry represents one single entry in the chart.
-     * 
-     * @param val the y value (the actual value of the entry)
+     *
+     * @param val    the y value (the actual value of the entry)
      * @param xIndex the corresponding index in the x value array (index on the
-     *            x-axis of the chart, must NOT be higher than the length of the
-     *            x-values String array)
+     *               x-axis of the chart, must NOT be higher than the length of the
+     *               x-values String array)
      */
     public Entry(float val, int xIndex) {
         mVal = val;
         mXIndex = xIndex;
     }
 
+    public void setEntryScreen(EntryScreen entryScreen) {
+        this.entryScreen = entryScreen;
+    }
+
     /**
      * A Entry represents one single entry in the chart.
-     * 
-     * @param val the y value (the actual value of the entry)
+     *
+     * @param val    the y value (the actual value of the entry)
      * @param xIndex the corresponding index in the x value array (index on the
-     *            x-axis of the chart, must NOT be higher than the length of the
-     *            x-values String array)
-     * @param data Spot for additional data this Entry represents.
+     *               x-axis of the chart, must NOT be higher than the length of the
+     *               x-values String array)
+     * @param data   Spot for additional data this Entry represents.
      */
     public Entry(float val, int xIndex, Object data) {
         this(val, xIndex);
@@ -48,7 +60,7 @@ public class Entry {
 
     /**
      * returns the x-index the value of this object is mapped to
-     * 
+     *
      * @return
      */
     public int getXIndex() {
@@ -57,7 +69,7 @@ public class Entry {
 
     /**
      * sets the x-index for the entry
-     * 
+     *
      * @param x
      */
     public void setXIndex(int x) {
@@ -66,7 +78,7 @@ public class Entry {
 
     /**
      * Returns the total value the entry represents.
-     * 
+     *
      * @return
      */
     public float getVal() {
@@ -75,7 +87,7 @@ public class Entry {
 
     /**
      * Sets the value for the entry.
-     * 
+     *
      * @param val
      */
     public void setVal(float val) {
@@ -85,7 +97,7 @@ public class Entry {
     /**
      * Returns the data, additional information that this Entry represents, or
      * null, if no data has been specified.
-     * 
+     *
      * @return
      */
     public Object getData() {
@@ -94,7 +106,7 @@ public class Entry {
 
     /**
      * Sets additional data this Entry should represent.
-     * 
+     *
      * @param data
      */
     public void setData(Object data) {
@@ -103,7 +115,7 @@ public class Entry {
 
     /**
      * returns an exact copy of the entry
-     * 
+     *
      * @return
      */
     public Entry copy() {
@@ -115,7 +127,7 @@ public class Entry {
      * Compares value, xIndex and data of the entries. Returns true if entries
      * are equal in those points, false if not. Does not check by hash-code like
      * it's done by the "equals" method.
-     * 
+     *
      * @param e
      * @return
      */
@@ -141,5 +153,21 @@ public class Entry {
     @Override
     public String toString() {
         return "Entry, xIndex: " + mXIndex + " val (sum): " + getVal();
+    }
+
+    public float findYCoordinate() {
+        float maxVal = entryScreen.getMaxVal();
+        float minVal = entryScreen.getMinVal();
+        float range = maxVal - minVal;
+        float top = entryScreen.getTop();
+        float bottom = entryScreen.getBottom();
+        float height = bottom - top;
+        float scale = Math.abs(height / range) * 0.9f;
+        float centerY = height / 2;
+        float centerVal = maxVal / 2 + minVal / 2;
+        float valOffsetCenter = mVal - centerVal;
+        float y = centerY - valOffsetCenter * scale;
+        Log.d("mwp", "scale=" + scale + ";y=" + y + ";mVal=" + mVal);
+        return y;
     }
 }
