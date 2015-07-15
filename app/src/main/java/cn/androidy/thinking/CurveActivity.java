@@ -15,7 +15,6 @@ public class CurveActivity extends DemoDetailBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         curveView = findViewById(R.id.curveView);
-        ObjectAnimator.ofFloat(curveView, "phaseY", 0, 1).setDuration(1000).start();
     }
 
     @Override
@@ -48,6 +47,13 @@ public class CurveActivity extends DemoDetailBaseActivity {
         } else if (id == android.R.id.home) {
             finish();
             return true;
+        } else if (id == R.id.action_anim_x) {
+            ObjectAnimator.ofFloat(curveView, "phaseX", 0, 1).setDuration(2000).start();
+        } else if (id == R.id.action_anim_y) {
+            ObjectAnimator.ofFloat(curveView, "phaseY", 0, 1).setDuration(2000).start();
+        } else if (id == R.id.action_anim_xy) {
+            ObjectAnimator.ofFloat(curveView, "phaseY", 0, 1).setDuration(2000).start();
+            ObjectAnimator.ofFloat(curveView, "phaseX", 0, 1).setDuration(2000).start();
         }
 
         return super.onOptionsItemSelected(item);

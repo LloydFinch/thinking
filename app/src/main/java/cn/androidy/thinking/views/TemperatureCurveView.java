@@ -32,7 +32,7 @@ public class TemperatureCurveView extends View {
     protected float maxVal;
     protected float minVal;
     float phaseX = 1;
-    float phaseY = 0;
+    float phaseY = 1;
 
     public float getPhaseX() {
         return phaseX;

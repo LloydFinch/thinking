@@ -2,6 +2,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="cn.androidy.thinking.CurveActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_anim_x"
+        android:orderInCategory="100"
+        android:title="@string/action_anim_x"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_anim_y"
+        android:orderInCategory="100"
+        android:title="@string/action_anim_y"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_anim_xy"
+        android:orderInCategory="100"
+        android:title="@string/action_anim_xy"
+        app:showAsAction="never" />
 </menu>
