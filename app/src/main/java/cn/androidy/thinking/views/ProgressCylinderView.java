@@ -7,23 +7,26 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import bolts.Task;
 import cn.androidy.thinking.charting.ChartingUtils;
 import cn.androidy.thinking.charting.data.Entry;
 import cn.androidy.thinking.charting.data.EntryScreen;
 
-public class TemperatureCurveView extends View {
+public class ProgressCylinderView extends View {
     List<Entry> entries = new ArrayList<>();
     /**
      * main paint object used for rendering
      */
     protected Paint mRenderPaint;
-    protected Paint textPaint;
     protected Path cubicPath = new Path();
     protected Path cubicFillPath = new Path();
     protected int xIndexWidth;
@@ -34,6 +37,7 @@ public class TemperatureCurveView extends View {
     float phaseX = 1;
     float phaseY = 1;
     float scale = 1;
+    Random random = new Random();
 
     public float getPhaseX() {
         return phaseX;
@@ -53,23 +57,18 @@ public class TemperatureCurveView extends View {
         invalidate();
     }
 
-    public TemperatureCurveView(Context context) {
+    public ProgressCylinderView(Context context) {
         this(context, null);
     }
 
-    public TemperatureCurveView(Context context, AttributeSet attrs) {
+    public ProgressCylinderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         dm = getResources().getDisplayMetrics();
         mRenderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRenderPaint.setStyle(Paint.Style.FILL);
         mRenderPaint.setStrokeWidth(3);
 
-        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setStyle(Paint.Style.FILL);
-        textPaint.setTextSize(12 * dm.density);
-
-        Random random = new Random();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 5; i++) {
             entries.add(new Entry(1 + random.nextInt(9) * 0.1f, i));
         }
         maxVal = ChartingUtils.getMaxVal(entries);
@@ -77,6 +76,27 @@ public class TemperatureCurveView extends View {
         mRange = maxVal - minVal;
         xIndexWidth = dm.widthPixels / (entries.size() - 1);
 
+        Thread t = new Thread(new Runnable() {
+            int j = 0;
+
+            @Override
+            public void run() {
+                while (true) {
+                    for (int i = 0, count = entries.size(); i < count; i++) {
+                        Entry e = entries.get(i);
+                        float newVal = (float) (1.0 * Math.sin(j++));
+                        e.setVal(newVal);
+                    }
+                    postInvalidate();
+                    try {
+                        Thread.sleep(180);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        t.start();
     }
 
     @Override
@@ -85,7 +105,7 @@ public class TemperatureCurveView extends View {
         for (int i = 0; i < entries.size(); i++) {
             entries.get(i).setEntryScreen(new EntryScreen(maxVal, minVal, getTop(), getBottom()));
         }
-        scale = Math.abs(getHeight() / (maxVal - minVal)) * 0.1f;
+        scale = 10 / mRange;
     }
 
 
@@ -124,7 +144,6 @@ public class TemperatureCurveView extends View {
             cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY, scale) + prevDy),
                     xIndexWidth * (cur.getXIndex() - curDx),
                     (-curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale));
-            canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale), textPaint);
             for (int j = minx + 1, count = Math.min(size, entries.size() - 1); j < count; j++) {
 
                 prevPrev = entries.get(j == 1 ? 0 : j - 2);
@@ -140,7 +159,6 @@ public class TemperatureCurveView extends View {
                 cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY, scale) + prevDy),
                         xIndexWidth * (cur.getXIndex() - curDx),
                         (cur.findYCoordinate(phaseY, scale) - curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale));
-                canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale), textPaint);
             }
 
             if (size > entries.size() - 1) {
@@ -160,7 +178,6 @@ public class TemperatureCurveView extends View {
                 cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY, scale) + prevDy),
                         xIndexWidth * (cur.getXIndex() - curDx),
                         (cur.findYCoordinate(phaseY, scale) - curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale));
-                canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale), textPaint);
             }
         }
 

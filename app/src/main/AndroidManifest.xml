@@ -74,6 +74,10 @@
             android:name=".SectorProgressBarActivity"
             android:label="@string/title_activity_sector_progress_bar" >
         </activity>
+        <activity
+            android:name=".ProgressCylinderActivity"
+            android:label="@string/title_activity_progress_cylinder" >
+        </activity>
     </application>
 
 </manifest>
