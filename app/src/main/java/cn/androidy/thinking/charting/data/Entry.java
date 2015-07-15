@@ -162,12 +162,11 @@ public class Entry {
         float top = entryScreen.getTop();
         float bottom = entryScreen.getBottom();
         float height = bottom - top;
-        float scale = Math.abs(height / range) * 0.9f;
+        float scale = Math.abs(height / range) * 0.1f;
         float centerY = height / 2;
         float centerVal = maxVal / 2 + minVal / 2;
         float valOffsetCenter = mVal - centerVal;
         float y = centerY - valOffsetCenter * scale;
-        Log.d("mwp", "scale=" + scale + ";y=" + y + ";mVal=" + mVal);
         return y;
     }
 }

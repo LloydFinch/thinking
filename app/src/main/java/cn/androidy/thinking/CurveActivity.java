@@ -1,16 +1,21 @@
 package cn.androidy.thinking;
 
+import android.animation.ObjectAnimator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class CurveActivity extends DemoDetailBaseActivity {
+    private View curveView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        curveView = findViewById(R.id.curveView);
+        ObjectAnimator.ofFloat(curveView, "phaseY", 0, 1).setDuration(1000).start();
     }
 
     @Override

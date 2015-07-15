@@ -19,7 +19,6 @@ import cn.androidy.thinking.charting.data.EntryScreen;
 
 public class TemperatureCurveView extends View {
     List<Entry> entries = new ArrayList<>();
-    private Paint limitLinePaint;
     /**
      * main paint object used for rendering
      */
@@ -32,6 +31,26 @@ public class TemperatureCurveView extends View {
     protected float mRange;
     protected float maxVal;
     protected float minVal;
+    float phaseX = 1;
+    float phaseY = 0;
+
+    public float getPhaseX() {
+        return phaseX;
+    }
+
+    public float getPhaseY() {
+        return phaseY;
+    }
+
+    public void setPhaseX(float phaseX) {
+        this.phaseX = phaseX;
+        invalidate();
+    }
+
+    public void setPhaseY(float phaseY) {
+        this.phaseY = phaseY;
+        invalidate();
+    }
 
     public TemperatureCurveView(Context context) {
         this(context, null);
@@ -43,11 +62,6 @@ public class TemperatureCurveView extends View {
         mRenderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRenderPaint.setStyle(Paint.Style.FILL);
         mRenderPaint.setStrokeWidth(3);
-
-        limitLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        limitLinePaint.setStyle(Paint.Style.FILL);
-        limitLinePaint.setColor(Color.BLUE);
-        limitLinePaint.setStrokeWidth(3);
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.FILL);
@@ -74,21 +88,8 @@ public class TemperatureCurveView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        int left = getLeft();
-        int right = getRight();
-        int h = getHeight();
-        canvas.drawLine(left, 2, right, 2, limitLinePaint);
-        canvas.drawText("top", 0, 30, textPaint);
-        canvas.drawLine(left, h / 2, right, h / 2, limitLinePaint);
-        canvas.drawText("center", left, h / 2, textPaint);
-        canvas.drawLine(left, h - 2, right, h - 2, limitLinePaint);
-        canvas.drawText("bottom", left, h, textPaint);
         int minx = 0;
         int maxx = entries.size();
-
-        int phaseX = 1;
-        int phaseY = 1;
-
         float intensity = 0.2f;
 
         cubicPath.reset();
@@ -177,8 +178,8 @@ public class TemperatureCurveView extends View {
 
     protected void drawCubicFill(Canvas canvas, Path spline,
                                  int from, int to) {
-        spline.lineTo((to - 1) * xIndexWidth, getHeight() / 2);
-        spline.lineTo(from * xIndexWidth, getHeight() / 2);
+        spline.lineTo((to - 1) * xIndexWidth, getHeight());
+        spline.lineTo(from * xIndexWidth, getHeight());
         spline.close();
 
         mRenderPaint.setStyle(Paint.Style.FILL);

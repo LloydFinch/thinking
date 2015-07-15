@@ -5,8 +5,9 @@
     tools:context="cn.androidy.thinking.CurveActivity">
 
     <cn.androidy.thinking.views.TemperatureCurveView
+        android:id="@+id/curveView"
         android:layout_width="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
