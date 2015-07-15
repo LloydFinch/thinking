@@ -109,19 +109,19 @@ public class TemperatureCurveView extends View {
             Entry next = entries.get(minx + 1);
 
             // let the spline start
-            cubicPath.moveTo(cur.getXIndex(), cur.findYCoordinate() * phaseY);
+            cubicPath.moveTo(cur.getXIndex(), cur.findYCoordinate(phaseY));
 
             prevDx = (cur.getXIndex() - prev.getXIndex()) * intensity;
-            prevDy = (cur.findYCoordinate() - prev.findYCoordinate()) * intensity;
+            prevDy = (cur.findYCoordinate(phaseY) - prev.findYCoordinate(phaseY)) * intensity;
 
             curDx = (next.getXIndex() - cur.getXIndex()) * intensity;
-            curDy = (next.findYCoordinate() - cur.findYCoordinate()) * intensity;
+            curDy = (next.findYCoordinate(phaseY) - cur.findYCoordinate(phaseY)) * intensity;
 
             // the first cubic
-            cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate() + prevDy) * phaseY,
+            cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY) + prevDy),
                     xIndexWidth * (cur.getXIndex() - curDx),
-                    (-curDy) * phaseY, cur.getXIndex() * xIndexWidth, cur.findYCoordinate() * phaseY);
-            canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.findYCoordinate() * phaseY, textPaint);
+                    (-curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY));
+            canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY), textPaint);
             for (int j = minx + 1, count = Math.min(size, entries.size() - 1); j < count; j++) {
 
                 prevPrev = entries.get(j == 1 ? 0 : j - 2);
@@ -130,14 +130,14 @@ public class TemperatureCurveView extends View {
                 next = entries.get(j + 1);
 
                 prevDx = (cur.getXIndex() - prevPrev.getXIndex()) * intensity;
-                prevDy = (cur.findYCoordinate() - prevPrev.findYCoordinate()) * intensity;
+                prevDy = (cur.findYCoordinate(phaseY) - prevPrev.findYCoordinate(phaseY)) * intensity;
                 curDx = (next.getXIndex() - prev.getXIndex()) * intensity;
-                curDy = (next.findYCoordinate() - prev.findYCoordinate()) * intensity;
+                curDy = (next.findYCoordinate(phaseY) - prev.findYCoordinate(phaseY)) * intensity;
 
-                cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate() + prevDy) * phaseY,
+                cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY) + prevDy),
                         xIndexWidth * (cur.getXIndex() - curDx),
-                        (cur.findYCoordinate() - curDy) * phaseY, cur.getXIndex() * xIndexWidth, cur.findYCoordinate() * phaseY);
-                canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.findYCoordinate() * phaseY, textPaint);
+                        (cur.findYCoordinate(phaseY) - curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY));
+                canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY), textPaint);
             }
 
             if (size > entries.size() - 1) {
@@ -149,15 +149,15 @@ public class TemperatureCurveView extends View {
                 next = cur;
 
                 prevDx = (cur.getXIndex() - prevPrev.getXIndex()) * intensity;
-                prevDy = (cur.findYCoordinate() - prevPrev.findYCoordinate()) * intensity;
+                prevDy = (cur.findYCoordinate(phaseY) - prevPrev.findYCoordinate(phaseY)) * intensity;
                 curDx = (next.getXIndex() - prev.getXIndex()) * intensity;
-                curDy = (next.findYCoordinate() - prev.findYCoordinate()) * intensity;
+                curDy = (next.findYCoordinate(phaseY) - prev.findYCoordinate(phaseY)) * intensity;
 
                 // the last cubic
-                cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate() + prevDy) * phaseY,
+                cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY) + prevDy),
                         xIndexWidth * (cur.getXIndex() - curDx),
-                        (cur.findYCoordinate() - curDy) * phaseY, cur.getXIndex() * xIndexWidth, cur.findYCoordinate() * phaseY);
-                canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.findYCoordinate() * phaseY, textPaint);
+                        (cur.findYCoordinate(phaseY) - curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY));
+                canvas.drawText(String.valueOf(cur.getVal()), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY), textPaint);
             }
         }
 

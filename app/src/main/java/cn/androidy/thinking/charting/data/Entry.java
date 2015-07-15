@@ -155,7 +155,7 @@ public class Entry {
         return "Entry, xIndex: " + mXIndex + " val (sum): " + getVal();
     }
 
-    public float findYCoordinate() {
+    public float findYCoordinate(float phaseY) {
         float maxVal = entryScreen.getMaxVal();
         float minVal = entryScreen.getMinVal();
         float range = maxVal - minVal;
@@ -167,6 +167,6 @@ public class Entry {
         float centerVal = maxVal / 2 + minVal / 2;
         float valOffsetCenter = mVal - centerVal;
         float y = centerY - valOffsetCenter * scale;
-        return y;
+        return height * (1 - phaseY) + y;
     }
 }
