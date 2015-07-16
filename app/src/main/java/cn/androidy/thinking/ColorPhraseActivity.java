@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -33,9 +35,17 @@ public class ColorPhraseActivity extends DemoDetailBaseActivity {
 
     @OnClick(R.id.button1)
     public void format() {
-        String pattern = editText.getText().toString();
-        CharSequence chars = ColorPhrase.from(pattern).withSeparator("{}").innerColor(0xFFE6454A).outerColor(0xFF666666).format();
-        textView.setText(chars);
+        float mTextSize = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_SP, 28, getResources().getDisplayMetrics());
+        float mTextSize2 = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_SP, 18, getResources().getDisplayMetrics());
+        String pattern = "abcde{f}g";
+        String pattern2 = "hijklm{n}";
+        CharSequence chars = ColorPhrase.from(pattern).withSeparator("{}").innerColorSize(0xFFE6454A, mTextSize).outerColorSize(0xFF666666, mTextSize2).format();
+        CharSequence chars2 = ColorPhrase.from(pattern2).withSeparator("{}").innerColorSize(0xFFE6454A, mTextSize).outerColorSize(0xFF666666, mTextSize2).format();
+        SpannableStringBuilder sp = new SpannableStringBuilder(chars);
+        sp.append(chars2);
+        textView.setText(sp);
     }
 
     @Override
