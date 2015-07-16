@@ -4,13 +4,40 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SeekBar;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import cn.androidy.thinking.views.ProgressCylinderView;
 
 
 public class ProgressCylinderActivity extends DemoDetailBaseActivity {
 
+    @Bind(R.id.seekBar)
+    SeekBar seekBar;
+    @Bind(R.id.curveView)
+    ProgressCylinderView cylinderView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                cylinderView.setProgress(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     @Override

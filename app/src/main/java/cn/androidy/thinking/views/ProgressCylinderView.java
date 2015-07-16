@@ -7,21 +7,18 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import bolts.Task;
 import cn.androidy.thinking.charting.ChartingUtils;
 import cn.androidy.thinking.charting.data.Entry;
 import cn.androidy.thinking.charting.data.EntryScreen;
 
-public class ProgressCylinderView extends View {
+public class ProgressCylinderView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
     List<Entry> entries = new ArrayList<>();
     /**
      * main paint object used for rendering
@@ -34,28 +31,29 @@ public class ProgressCylinderView extends View {
     protected float mRange;
     protected float maxVal;
     protected float minVal;
-    float phaseX = 1;
-    float phaseY = 1;
     float scale = 1;
+    int j = 0;
+    /**
+     * 与SurfaceHolder绑定的Canvas
+     */
+    private Canvas mCanvas;
+    private SurfaceHolder mHolder;
     Random random = new Random();
+    /**
+     * 线程的控制开关
+     */
+    private boolean isRunning;
+    private int progress;
+    Thread t;
 
-    public float getPhaseX() {
-        return phaseX;
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 
-    public float getPhaseY() {
-        return phaseY;
+    public int getProgress() {
+        return progress;
     }
 
-    public void setPhaseX(float phaseX) {
-        this.phaseX = phaseX;
-        invalidate();
-    }
-
-    public void setPhaseY(float phaseY) {
-        this.phaseY = phaseY;
-        invalidate();
-    }
 
     public ProgressCylinderView(Context context) {
         this(context, null);
@@ -64,39 +62,8 @@ public class ProgressCylinderView extends View {
     public ProgressCylinderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         dm = getResources().getDisplayMetrics();
-        mRenderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mRenderPaint.setStyle(Paint.Style.FILL);
-        mRenderPaint.setStrokeWidth(3);
-
-        for (int i = 0; i < 5; i++) {
-            entries.add(new Entry(1 + random.nextInt(9) * 0.1f, i));
-        }
-        maxVal = ChartingUtils.getMaxVal(entries);
-        minVal = ChartingUtils.getMinVal(entries);
-        mRange = maxVal - minVal;
-        xIndexWidth = dm.widthPixels / (entries.size() - 1);
-
-        Thread t = new Thread(new Runnable() {
-            int j = 0;
-
-            @Override
-            public void run() {
-                while (true) {
-                    for (int i = 0, count = entries.size(); i < count; i++) {
-                        Entry e = entries.get(i);
-                        float newVal = (float) (1.0 * Math.sin(j++));
-                        e.setVal(newVal);
-                    }
-                    postInvalidate();
-                    try {
-                        Thread.sleep(180);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        t.start();
+        mHolder = getHolder();
+        mHolder.addCallback(this);
     }
 
     @Override
@@ -108,92 +75,101 @@ public class ProgressCylinderView extends View {
         scale = 10 / mRange;
     }
 
+    private float getPhaseY() {
+        return progress * 1.0f / 100;
+    }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        int minx = 0;
-        int maxx = entries.size();
-        float intensity = 0.2f;
+    private void draw() {
+        // 获得canvas
+        mCanvas = mHolder.lockCanvas();
+        if (mCanvas != null) {
+            mCanvas.drawColor(Color.WHITE);
+            int minx = 0;
+            int maxx = entries.size();
+            float intensity = 0.2f;
+            float phaseY = getPhaseY();
+            cubicPath.reset();
+            float h = getHeight();
+            int size = (int) Math.ceil((maxx - minx) + minx);
 
-        cubicPath.reset();
+            if (size - minx >= 2) {
 
-        int size = (int) Math.ceil((maxx - minx) * phaseX + minx);
+                float prevDx = 0f;
+                float prevDy = 0f;
+                float curDx = 0f;
+                float curDy = 0f;
 
-        if (size - minx >= 2) {
+                Entry prevPrev = entries.get(minx);
+                Entry prev = entries.get(minx);
+                Entry cur = entries.get(minx);
+                Entry next = entries.get(minx + 1);
 
-            float prevDx = 0f;
-            float prevDy = 0f;
-            float curDx = 0f;
-            float curDy = 0f;
+                // let the spline start
+                cubicPath.moveTo(cur.getXIndex(), cur.findYCoordinate(phaseY, scale, -h / 2));
 
-            Entry prevPrev = entries.get(minx);
-            Entry prev = entries.get(minx);
-            Entry cur = entries.get(minx);
-            Entry next = entries.get(minx + 1);
+                prevDx = (cur.getXIndex() - prev.getXIndex()) * intensity;
+                prevDy = (cur.findYCoordinate(phaseY, scale, -h / 2) - prev.findYCoordinate(phaseY, scale, -h / 2)) * intensity;
 
-            // let the spline start
-            cubicPath.moveTo(cur.getXIndex(), cur.findYCoordinate(phaseY, scale));
+                curDx = (next.getXIndex() - cur.getXIndex()) * intensity;
+                curDy = (next.findYCoordinate(phaseY, scale, -h / 2) - cur.findYCoordinate(phaseY, scale, -h / 2)) * intensity;
 
-            prevDx = (cur.getXIndex() - prev.getXIndex()) * intensity;
-            prevDy = (cur.findYCoordinate(phaseY, scale) - prev.findYCoordinate(phaseY, scale)) * intensity;
-
-            curDx = (next.getXIndex() - cur.getXIndex()) * intensity;
-            curDy = (next.findYCoordinate(phaseY, scale) - cur.findYCoordinate(phaseY, scale)) * intensity;
-
-            // the first cubic
-            cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY, scale) + prevDy),
-                    xIndexWidth * (cur.getXIndex() - curDx),
-                    (-curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale));
-            for (int j = minx + 1, count = Math.min(size, entries.size() - 1); j < count; j++) {
-
-                prevPrev = entries.get(j == 1 ? 0 : j - 2);
-                prev = entries.get(j - 1);
-                cur = entries.get(j);
-                next = entries.get(j + 1);
-
-                prevDx = (cur.getXIndex() - prevPrev.getXIndex()) * intensity;
-                prevDy = (cur.findYCoordinate(phaseY, scale) - prevPrev.findYCoordinate(phaseY, scale)) * intensity;
-                curDx = (next.getXIndex() - prev.getXIndex()) * intensity;
-                curDy = (next.findYCoordinate(phaseY, scale) - prev.findYCoordinate(phaseY, scale)) * intensity;
-
-                cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY, scale) + prevDy),
+                // the first cubic
+                cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY, scale, -h / 2) + prevDy),
                         xIndexWidth * (cur.getXIndex() - curDx),
-                        (cur.findYCoordinate(phaseY, scale) - curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale));
+                        (-curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale, -h / 2));
+                for (int j = minx + 1, count = Math.min(size, entries.size() - 1); j < count; j++) {
+
+                    prevPrev = entries.get(j == 1 ? 0 : j - 2);
+                    prev = entries.get(j - 1);
+                    cur = entries.get(j);
+                    next = entries.get(j + 1);
+
+                    prevDx = (cur.getXIndex() - prevPrev.getXIndex()) * intensity;
+                    prevDy = (cur.findYCoordinate(phaseY, scale, -h / 2) - prevPrev.findYCoordinate(phaseY, scale, -h / 2)) * intensity;
+                    curDx = (next.getXIndex() - prev.getXIndex()) * intensity;
+                    curDy = (next.findYCoordinate(phaseY, scale, -h / 2) - prev.findYCoordinate(phaseY, scale, -h / 2)) * intensity;
+
+                    cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY, scale, -h / 2) + prevDy),
+                            xIndexWidth * (cur.getXIndex() - curDx),
+                            (cur.findYCoordinate(phaseY, scale, -h / 2) - curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale, -h / 2));
+                }
+
+                if (size > entries.size() - 1) {
+
+                    prevPrev = entries.get((entries.size() >= 3) ? entries.size() - 3
+                            : entries.size() - 2);
+                    prev = entries.get(entries.size() - 2);
+                    cur = entries.get(entries.size() - 1);
+                    next = cur;
+
+                    prevDx = (cur.getXIndex() - prevPrev.getXIndex()) * intensity;
+                    prevDy = (cur.findYCoordinate(phaseY, scale, -h / 2) - prevPrev.findYCoordinate(phaseY, scale, -h / 2)) * intensity;
+                    curDx = (next.getXIndex() - prev.getXIndex()) * intensity;
+                    curDy = (next.findYCoordinate(phaseY, scale, -h / 2) - prev.findYCoordinate(phaseY, scale, -h / 2)) * intensity;
+
+                    // the last cubic
+                    cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY, scale, -h / 2) + prevDy),
+                            xIndexWidth * (cur.getXIndex() - curDx),
+                            (cur.findYCoordinate(phaseY, scale, -h / 2) - curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale, -h / 2));
+                }
             }
 
-            if (size > entries.size() - 1) {
 
-                prevPrev = entries.get((entries.size() >= 3) ? entries.size() - 3
-                        : entries.size() - 2);
-                prev = entries.get(entries.size() - 2);
-                cur = entries.get(entries.size() - 1);
-                next = cur;
+            cubicFillPath.reset();
+            cubicFillPath.addPath(cubicPath);
+            // create a new path, this is bad for performance
+            drawCubicFill(mCanvas, cubicFillPath, 0, size);
 
-                prevDx = (cur.getXIndex() - prevPrev.getXIndex()) * intensity;
-                prevDy = (cur.findYCoordinate(phaseY, scale) - prevPrev.findYCoordinate(phaseY, scale)) * intensity;
-                curDx = (next.getXIndex() - prev.getXIndex()) * intensity;
-                curDy = (next.findYCoordinate(phaseY, scale) - prev.findYCoordinate(phaseY, scale)) * intensity;
+            mRenderPaint.setColor(0xffed145b);
 
-                // the last cubic
-                cubicPath.cubicTo(xIndexWidth * (prev.getXIndex() + prevDx), (prev.findYCoordinate(phaseY, scale) + prevDy),
-                        xIndexWidth * (cur.getXIndex() - curDx),
-                        (cur.findYCoordinate(phaseY, scale) - curDy), cur.getXIndex() * xIndexWidth, cur.findYCoordinate(phaseY, scale));
-            }
+            mRenderPaint.setStyle(Paint.Style.STROKE);
+
+            mCanvas.drawPath(cubicPath, mRenderPaint);
+
+            mRenderPaint.setPathEffect(null);
+
+            mHolder.unlockCanvasAndPost(mCanvas);
         }
-
-
-        cubicFillPath.reset();
-        cubicFillPath.addPath(cubicPath);
-        // create a new path, this is bad for performance
-        drawCubicFill(canvas, cubicFillPath, 0, size);
-
-        mRenderPaint.setColor(0xffed145b);
-
-        mRenderPaint.setStyle(Paint.Style.STROKE);
-
-        canvas.drawPath(cubicPath, mRenderPaint);
-
-        mRenderPaint.setPathEffect(null);
     }
 
     protected void drawCubicFill(Canvas canvas, Path spline,
@@ -212,4 +188,57 @@ public class ProgressCylinderView extends View {
 
         mRenderPaint.setAlpha(255);
     }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        mRenderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mRenderPaint.setStyle(Paint.Style.FILL);
+        mRenderPaint.setStrokeWidth(3);
+
+        for (int i = 0; i < 5; i++) {
+            entries.add(new Entry(1 + random.nextInt(9) * 0.1f, i));
+        }
+        maxVal = ChartingUtils.getMaxVal(entries);
+        minVal = ChartingUtils.getMinVal(entries);
+        mRange = maxVal - minVal;
+        xIndexWidth = dm.widthPixels / (entries.size() - 1);
+
+        // 开启线程
+        isRunning = true;
+        t = new Thread(this);
+        t.start();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        // 通知关闭线程
+        isRunning = false;
+    }
+
+    @Override
+    public void run() {
+        while (isRunning) {
+            for (int i = 0, count = entries.size(); i < count; i++) {
+                Entry e = entries.get(i);
+                float newVal = (float) (1.0 * Math.sin(j++));
+                e.setVal(newVal);
+            }
+            long start = System.currentTimeMillis();
+            draw();
+            long end = System.currentTimeMillis();
+            try {
+                if (end - start < 150) {
+                    Thread.sleep(150 - (end - start));
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
