@@ -82,6 +82,10 @@
             android:name=".WaveViewActivity"
             android:label="@string/title_activity_wave_view" >
         </activity>
+        <activity
+            android:name=".ColorPhraseActivity"
+            android:label="@string/title_activity_color_phrase" >
+        </activity>
     </application>
 
 </manifest>
