@@ -11,11 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.androidy.thinking.adapters.DemoAdapter;
-import cn.androidy.thinking.demos.AllDemo;
 import cn.androidy.thinking.demos.DemoListBuilder;
 import cn.androidy.thinking.demos.IDemoEntry;
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecyclerView.setLayoutManager(mLayoutManager);
         mList = DemoListBuilder.getDemoEntryList();
         mRecyclerView.setAdapter(new DemoAdapter(this, mList));
+        Logger.d("hello");
     }
 
     @Override
