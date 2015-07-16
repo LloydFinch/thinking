@@ -45,16 +45,16 @@ public class LyricView extends View implements ValueAnimator.AnimatorUpdateListe
 
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs,
-                    R.styleable.LyricView);
+                    R.styleable.Lyric);
             mTextSize = ta.getDimensionPixelSize(
-                    R.styleable.LyricView_text_size, mTextSize);
+                    R.styleable.Lyric_text_size, mTextSize);
             mTextOriginColor = ta.getColor(
-                    R.styleable.LyricView_text_origin_color,
+                    R.styleable.Lyric_text_origin_color,
                     mTextOriginColor);
             mTextChangeColor = ta.getColor(
-                    R.styleable.LyricView_text_change_color,
+                    R.styleable.Lyric_text_change_color,
                     mTextChangeColor);
-            mProgress = ta.getFloat(R.styleable.LyricView_progress, 0);
+            mProgress = ta.getFloat(R.styleable.Lyric_progress, 0);
             ta.recycle();
         }
 

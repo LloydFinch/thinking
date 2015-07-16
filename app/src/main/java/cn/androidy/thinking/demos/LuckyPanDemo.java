@@ -15,13 +15,6 @@ public class LuckyPanDemo extends ThirdParthDemo {
     }
 
     @Override
-    public void demonstrate(Context context) {
-        Intent intent = new Intent(context, LuckPanActivity.class);
-        intent.putExtra(KEY_ORIGINAL_URL, getOriginalUrl());
-        context.startActivity(intent);
-    }
-
-    @Override
     public boolean isMember(DemoFamily demoFamily) {
         return demoFamily == DemoFamily.ALL || demoFamily == DemoFamily.ZHY;
     }

@@ -17,7 +17,7 @@ public interface IDemoEntry {
     public boolean isMember(DemoFamily demoFamily);
 
     public static enum DemoFamily {
-        SQUARE("Square开源"), ALL("全部Demo"), RENYUGANG("任玉刚"), ME("原创Demo"), ZHY("张洪洋");
+        SQUARE("Square开源"), ALL("全部Demo"), RENYUGANG("任玉刚"), ME("原创Demo"), ZHY("张洪洋"), GITHUB("GitHub");
         private String name;
 
         private DemoFamily(String name) {
@@ -37,6 +37,8 @@ public interface IDemoEntry {
                 return ZHY;
             } else if (ME.getName().equals(keyword)) {
                 return ME;
+            } else if (GITHUB.getName().equals(keyword)) {
+                return GITHUB;
             } else {
                 return ALL;
             }

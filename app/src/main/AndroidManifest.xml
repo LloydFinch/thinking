@@ -78,6 +78,10 @@
             android:name=".ProgressCylinderActivity"
             android:label="@string/title_activity_progress_cylinder" >
         </activity>
+        <activity
+            android:name=".WaveViewActivity"
+            android:label="@string/title_activity_wave_view" >
+        </activity>
     </application>
 
 </manifest>
