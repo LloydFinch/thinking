@@ -53,7 +53,7 @@ public class LogListFragment extends Fragment implements LogListReadTask.ILogLis
 			list.addAll(result);
 		}
 		if (adapter == null) {
-			adapter = new LogListAdapter(getActivity(), getLogTag(), result);
+			adapter = new LogListAdapter(getActivity(), getLogTag(), list);
 			listView.setAdapter(adapter);
 		} else {
 			adapter.notifyDataSetChanged();
