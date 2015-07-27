@@ -10,9 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecyclerView.setLayoutManager(mLayoutManager);
         mList = DemoListBuilder.getDemoEntryList();
         mRecyclerView.setAdapter(new DemoAdapter(this, mList));
-        Logger.d("hello");
     }
 
     @Override

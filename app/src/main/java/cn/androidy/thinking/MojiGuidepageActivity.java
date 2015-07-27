@@ -26,7 +26,6 @@ import com.ryanharter.viewpager.ViewPager;
 import com.ryanharter.viewpager.ViewPager.OnPageChangeListener;
 
 import cn.androidy.thinking.drawables.DrawableBuilder;
-import cn.androidy.thinking.utils.DensityUtil;
 
 public class MojiGuidepageActivity extends FragmentActivity implements
         OnPageChangeListener {
@@ -99,9 +98,7 @@ public class MojiGuidepageActivity extends FragmentActivity implements
                         // TODO Auto-generated method stub
                         int h1 = centerLayout.getTop();
                         int h2 = centerLayout.getBottom();
-                        DensityUtil densityUtil = new DensityUtil(
-                                MojiGuidepageActivity.this);
-                        int w = densityUtil.getScreenWidth();
+                        int w = getResources().getDisplayMetrics().widthPixels;
 
                         fx1 = t3_icon2.getTop() + t3_icon2.getHeight();
                         fy1 = -t3_icon2.getTop() - t3_icon2.getHeight();
