@@ -11,7 +11,7 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
 import cn.androidy.thinking.utils.CommonUtils;
-import cn.androidy.thinking.utils.QfqReportSender;
+import cn.androidy.thinking.utils.CustomReportSender;
 
 @ReportsCrashes(mode = ReportingInteractionMode.TOAST, forceCloseDialogAfterToast = false, // optional,
 // default
@@ -30,7 +30,7 @@ public class ThinkingApp extends Application {
          */
         String logDir = getAppFileRootDirectory() + "/log";
         LogManager.logFileDir = logDir;
-        QfqReportSender sender = QfqReportSender.toDir(logDir + "/CrashLog");
+        CustomReportSender sender = CustomReportSender.toDir(logDir + "/CrashLog");
         ACRA.getErrorReporter().setReportSender(sender);
         LogManager.enableLogLocal(enableSaveLog());
     }

@@ -13,13 +13,16 @@ import org.acra.sender.ReportSenderException;
 
 import android.content.Context;
 
-public class QfqReportSender implements ReportSender {
+import com.example.android.common.logger.LogLocalFileManager;
+import com.example.android.common.logger.LogManager;
+
+public class CustomReportSender implements ReportSender {
     private String dir;
     private ExecutorService es = Executors.newFixedThreadPool(3);
     private static final int MAX_LOG_FILE_NUM = 50;
 
-    public static QfqReportSender toDir(String dir) {
-        QfqReportSender sender = new QfqReportSender();
+    public static CustomReportSender toDir(String dir) {
+        CustomReportSender sender = new CustomReportSender();
         sender.dir = dir;
         return sender;
     }
@@ -33,10 +36,7 @@ public class QfqReportSender implements ReportSender {
                 if (StringUtils.isEmpty(dir)) {
                     return;
                 }
-                GregorianCalendar calendar = new GregorianCalendar();
-                String fileName = (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE) + "-"
-                        + calendar.get(Calendar.HOUR_OF_DAY) + "-" + calendar.get(Calendar.MINUTE) + "-"
-                        + calendar.get(Calendar.SECOND) + ".txt";
+                String fileName = LogLocalFileManager.getCurrentTimeTag();
                 File dirF = new File(dir);
                 if (dirF.listFiles() != null && dirF.listFiles().length >= MAX_LOG_FILE_NUM) {
                     FileUtils.deleteFile(dir);
