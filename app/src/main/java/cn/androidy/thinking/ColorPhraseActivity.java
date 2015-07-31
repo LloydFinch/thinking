@@ -33,7 +33,31 @@ public class ColorPhraseActivity extends DemoDetailBaseActivity {
     }
 
     @OnClick(R.id.button1)
-    public void format() {
+    public void formatSize() {
+        float mTextSizeInner = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_SP, 28, getResources().getDisplayMetrics());
+        float mTextSizeOuter = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_SP, 18, getResources().getDisplayMetrics());
+        float price = 2999.00f;
+        String pattern = "这件商品售价[{price}]元";
+        CharSequence chars = Phrase.from(pattern).put("price", Float.toString(price)).format();
+        chars = SizeColorPhrase.from(chars).withSeparator("[]").innerSize(mTextSizeInner).outerSize(mTextSizeOuter).format();
+        SpannableStringBuilder sp = new SpannableStringBuilder(chars);
+        textView.setText(sp);
+    }
+
+    @OnClick(R.id.button2)
+    public void formatColor() {
+        float price = 2999.00f;
+        String pattern = "这件商品售价[{price}]元";
+        CharSequence chars = Phrase.from(pattern).put("price", Float.toString(price)).format();
+        chars = SizeColorPhrase.from(chars).withSeparator("[]").innerColor(Color.RED).outerColor(Color.BLACK).format();
+        SpannableStringBuilder sp = new SpannableStringBuilder(chars);
+        textView.setText(sp);
+    }
+
+    @OnClick(R.id.button3)
+    public void formatSizeColor() {
         float mTextSizeInner = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP, 28, getResources().getDisplayMetrics());
         float mTextSizeOuter = TypedValue.applyDimension(
