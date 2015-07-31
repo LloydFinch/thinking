@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/log_fragment"
-        android:name="com.example.android.common.logger.LogFragment"
+        android:name="cn.androidy.logger.view.LogFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

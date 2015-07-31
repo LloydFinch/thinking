@@ -1,8 +1,6 @@
 
 package cn.androidy.thinking.charting.data;
 
-import com.example.android.common.logger.Log;
-
 /**
  * Class representing one entry in the chart. Might contain multiple values.
  * Might only contain a single value depending on the used constructor.

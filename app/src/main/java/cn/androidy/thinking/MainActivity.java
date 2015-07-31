@@ -11,8 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.android.common.logger.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecyclerView.setLayoutManager(mLayoutManager);
         mList = DemoListBuilder.getDemoEntryList();
         mRecyclerView.setAdapter(new DemoAdapter(this, mList));
-        Log.d(LogConstants.TAG_ACTIVITY, "进入主界面");
     }
 
     @Override

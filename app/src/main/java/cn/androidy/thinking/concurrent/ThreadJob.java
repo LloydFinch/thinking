@@ -4,8 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.example.android.common.logger.Log;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 

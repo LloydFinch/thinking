@@ -1,27 +1,26 @@
 package cn.androidy.thinking;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.androidy.common.utils.Phrase;
+import cn.androidy.common.utils.SizeColorPhrase;
 import cn.androidy.thinking.demos.ThirdParthDemo;
-import cn.androidy.thinking.utils.ColorPhrase;
 
 
 public class ColorPhraseActivity extends DemoDetailBaseActivity {
-    @Bind(R.id.editText1)
-    EditText editText;
+
     @Bind(R.id.textView1)
     TextView textView;
     private String originalUrl;
@@ -35,16 +34,15 @@ public class ColorPhraseActivity extends DemoDetailBaseActivity {
 
     @OnClick(R.id.button1)
     public void format() {
-        float mTextSize = TypedValue.applyDimension(
+        float mTextSizeInner = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP, 28, getResources().getDisplayMetrics());
-        float mTextSize2 = TypedValue.applyDimension(
+        float mTextSizeOuter = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP, 18, getResources().getDisplayMetrics());
-        String pattern = "abcde{f}g";
-        String pattern2 = "hijklm{n}";
-        CharSequence chars = ColorPhrase.from(pattern).withSeparator("{}").innerColorSize(0xFFE6454A, mTextSize).outerColorSize(0xFF666666, mTextSize2).format();
-        CharSequence chars2 = ColorPhrase.from(pattern2).withSeparator("{}").innerColorSize(0xFFE6454A, mTextSize).outerColorSize(0xFF666666, mTextSize2).format();
+        float price = 2999.00f;
+        String pattern = "这件商品售价[{price}]元";
+        CharSequence chars = Phrase.from(pattern).put("price", Float.toString(price)).format();
+        chars = SizeColorPhrase.from(chars).withSeparator("[]").innerColorSize(Color.RED, mTextSizeInner).outerColorSize(Color.BLACK, mTextSizeOuter).format();
         SpannableStringBuilder sp = new SpannableStringBuilder(chars);
-        sp.append(chars2);
         textView.setText(sp);
     }
 

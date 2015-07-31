@@ -32,12 +32,6 @@
         lyric:text_origin_color="#ff000000"
         lyric:text_size="22sp" />
 
-    <fragment
-        android:id="@+id/log_fragment"
-        android:name="com.example.android.common.logger.LogFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

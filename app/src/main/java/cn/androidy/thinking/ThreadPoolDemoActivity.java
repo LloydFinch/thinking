@@ -10,16 +10,16 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.executor.FifoPriorityThreadPoolExecutor;
 import com.example.android.common.activities.SampleActivityBase;
-import com.example.android.common.logger.Log;
-import com.example.android.common.logger.LogFragment;
-import com.example.android.common.logger.LogWrapper;
-import com.example.android.common.logger.MessageOnlyLogFilter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
+import cn.androidy.logger.core.Log;
+import cn.androidy.logger.core.LogWrapper;
+import cn.androidy.logger.core.MessageOnlyLogFilter;
+import cn.androidy.logger.view.LogFragment;
 import cn.androidy.thinking.concurrent.PrioritizedRunnable;
 import cn.androidy.thinking.concurrent.ThreadJob;
 import cn.androidy.thinking.concurrent.ThreadResultConsumer;
