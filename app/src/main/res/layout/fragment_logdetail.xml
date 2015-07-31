@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.android.common.logger.LoggerDetailView
+    <cn.androidy.logger.view.LoggerDetailView
         android:id="@+id/customLoggerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ll"></com.example.android.common.logger.LoggerDetailView>
+        android:layout_above="@+id/ll"></cn.androidy.logger.view.LoggerDetailView>
 
     <LinearLayout
         android:id="@+id/ll"
@@ -15,13 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="clickBack"
-            android:text="返回" />
 
         <Button
             android:id="@+id/btn_clear"

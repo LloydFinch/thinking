@@ -75,6 +75,9 @@
             android:name=".ColorPhraseActivity"
             android:label="@string/title_activity_color_phrase"></activity>
         <activity
+            android:name=".LogDemoActivity"
+            android:label="@string/title_activity_log"></activity>
+        <activity
             android:name=".LogActivity"
             android:label="@string/title_activity_log"></activity>
     </application>
