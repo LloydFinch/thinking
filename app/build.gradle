@@ -30,5 +30,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.0'
     compile 'com.squareup:android-times-square:1.5.0@aar'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile files('libs/support-logger.jar')
+    compile project(':loglib')
 }
