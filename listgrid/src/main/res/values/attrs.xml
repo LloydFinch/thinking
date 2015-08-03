@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RatioView">
+        <attr name="height_base_value" format="float" />
+        <attr name="width_base_value" format="float" />
+        <attr name="screen_width_base_value" format="integer" />
+    </declare-styleable>
+</resources>

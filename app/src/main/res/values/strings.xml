@@ -31,4 +31,5 @@
     <string name="title_activity_color_phrase">ColorPhraseActivity</string>
     <string name="title_activity_log">查看Log</string>
     <string name="crash_toast_text">提示:很抱歉,程序出现异常,即将退出.</string>
+    <string name="title_activity_grid_list">GridListActivity</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.androidy.thinking">
+    package="cn.androidy.thinking" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -11,11 +11,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:logo="@drawable/ic_launcher">
+            android:logo="@drawable/ic_launcher" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,56 +30,60 @@
             android:label="@string/title_activity_thread_pool_demo" />
         <activity
             android:name=".LyricViewActivity"
-            android:label="@string/title_activity_lyric_view"></activity>
+            android:label="@string/title_activity_lyric_view" />
         <activity
             android:name=".WeatherActivity"
-            android:label="@string/title_activity_weather"></activity>
+            android:label="@string/title_activity_weather" />
         <activity
             android:name=".CalendarPickerViewActivity"
-            android:label="@string/title_activity_calendar_picker_view"></activity>
+            android:label="@string/title_activity_calendar_picker_view" />
         <activity
             android:name=".RippleActivity"
-            android:label="@string/title_activity_ripple"></activity>
+            android:label="@string/title_activity_ripple" />
         <activity
             android:name=".BannerActivity"
-            android:label="@string/title_activity_banner"></activity>
+            android:label="@string/title_activity_banner" />
         <activity
             android:name=".DrawableDemoActivity"
-            android:label="@string/title_activity_drawable_demo"></activity>
+            android:label="@string/title_activity_drawable_demo" />
         <activity
             android:name=".game.pintu.PintuActivity"
-            android:label="@string/title_activity_pintu"></activity>
+            android:label="@string/title_activity_pintu" />
         <activity
             android:name=".ScrollPickerActivity"
-            android:label="@string/title_activity_scroll_picker"></activity>
+            android:label="@string/title_activity_scroll_picker" />
         <activity
             android:name=".MojiGuidepageActivity"
             android:label="@string/title_activity_moji_guidepage"
-            android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
         <activity
             android:name=".CurveActivity"
-            android:label="@string/title_activity_curve"></activity>
+            android:label="@string/title_activity_curve" />
         <activity
             android:name=".LuckPanActivity"
-            android:label="@string/title_activity_luck_pan"></activity>
+            android:label="@string/title_activity_luck_pan" />
         <activity
             android:name=".SectorProgressBarActivity"
-            android:label="@string/title_activity_sector_progress_bar"></activity>
+            android:label="@string/title_activity_sector_progress_bar" />
         <activity
             android:name=".ProgressCylinderActivity"
-            android:label="@string/title_activity_progress_cylinder"></activity>
+            android:label="@string/title_activity_progress_cylinder" />
         <activity
             android:name=".WaveViewActivity"
-            android:label="@string/title_activity_wave_view"></activity>
+            android:label="@string/title_activity_wave_view" />
         <activity
             android:name=".ColorPhraseActivity"
-            android:label="@string/title_activity_color_phrase"></activity>
+            android:label="@string/title_activity_color_phrase" />
         <activity
             android:name=".LogDemoActivity"
-            android:label="@string/title_activity_log"></activity>
+            android:label="@string/title_activity_log" />
         <activity
             android:name=".LogActivity"
-            android:label="@string/title_activity_log"></activity>
+            android:label="@string/title_activity_log" />
+        <activity
+            android:name=".GridListActivity"
+            android:label="@string/title_activity_grid_list" >
+        </activity>
     </application>
 
 </manifest>
