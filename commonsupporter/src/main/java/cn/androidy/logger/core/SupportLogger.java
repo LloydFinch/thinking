@@ -14,7 +14,7 @@ import cn.androidy.logger.data.LogReadTask;
  * @author mwp 2015-7-28 15:35:48
  */
 public class SupportLogger {
-    private static boolean ENABLE_LOG = false;
+    private static boolean ENABLE_LOG = true;
     private static SupportLogger instance;
     private StorageLogPrinter storageLogPrinter;
     private LoggerSettings settings;
@@ -64,14 +64,6 @@ public class SupportLogger {
 
     public static void readLogList(String tag, LogListReadTask.ILogListReadListener listener) {
         new LogListReadTask(SupportLogger.getCommonLogDir(), listener).execute(tag);
-    }
-
-    public static void start() {
-        ENABLE_LOG = true;
-    }
-
-    public static void stop() {
-        ENABLE_LOG = false;
     }
 
     /**

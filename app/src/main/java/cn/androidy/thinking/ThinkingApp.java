@@ -27,6 +27,6 @@ public class ThinkingApp extends Application {
         StorageReportSender sender = new StorageReportSender(this);
         ACRA.getErrorReporter().setReportSender(sender);
         SupportLogger.init(this);
-        SupportLogger.start();
+        SupportLogger.enable(true);
     }
 }
