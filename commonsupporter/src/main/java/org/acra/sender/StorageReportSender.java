@@ -19,10 +19,8 @@ public class StorageReportSender implements ReportSender {
     private ExecutorService es = Executors.newFixedThreadPool(3);
     private static final int MAX_LOG_FILE_NUM = 50;
 
-    public static StorageReportSender toDir(String dir) {
-        StorageReportSender sender = new StorageReportSender();
-        sender.dir = dir;
-        return sender;
+    public StorageReportSender(Context context) {
+        this.dir = FileUtils.getDiskCacheDir(context, "log/Crash").getAbsolutePath();
     }
 
     @Override

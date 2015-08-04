@@ -1,5 +1,12 @@
 package cn.androidy.logger.core;
 
+import android.content.Context;
+import android.text.TextUtils;
+
+import java.io.File;
+import java.util.logging.Logger;
+
+import cn.androidy.common.utils.FileUtils;
 import cn.androidy.logger.data.LogListReadTask;
 import cn.androidy.logger.data.LogReadTask;
 
@@ -10,9 +17,11 @@ public class SupportLogger {
     private static boolean ENABLE_LOG = false;
     private static SupportLogger instance;
     private StorageLogPrinter storageLogPrinter;
+    private LoggerSettings settings;
 
     private SupportLogger() {
         storageLogPrinter = new StorageLogPrinter();
+        settings = new LoggerSettings();
     }
 
     public StorageLogPrinter getStorageLogPrinter() {
@@ -31,10 +40,18 @@ public class SupportLogger {
         return instance;
     }
 
-    /**
-     * the file directory to save log files
-     */
-    public static void intoDir(String dir) {
+
+    public static void init(Context context) {
+        init(context, null);
+    }
+
+    public static void init(Context context, LoggerSettings settings) {
+        String dir;
+        if (settings != null && !TextUtils.isEmpty(settings.getDir())) {
+            dir = settings.getDir();
+        } else {
+            dir = FileUtils.getDiskCacheDir(context, "log").getAbsolutePath();
+        }
         SupportLogger.getInstance().getStorageLogPrinter().setLogDir(dir);
         LogWrapper logWrapper = new LogWrapper();
         Log.setLogNode(logWrapper);
@@ -70,5 +87,17 @@ public class SupportLogger {
 
     public static boolean isEnable() {
         return ENABLE_LOG;
+    }
+
+    public static class LoggerSettings {
+        private String dir;
+
+        public String getDir() {
+            return dir;
+        }
+
+        public void setDir(String dir) {
+            this.dir = dir;
+        }
     }
 }

@@ -24,19 +24,9 @@ public class ThinkingApp extends Application {
     public void onCreate() {
         super.onCreate();
         ACRA.init(this);
-        String logDir = getAppFileRootDirectory() + "/log";
-        StorageReportSender sender = StorageReportSender.toDir(logDir + "/CrashLog");
+        StorageReportSender sender = new StorageReportSender(this);
         ACRA.getErrorReporter().setReportSender(sender);
-        SupportLogger.intoDir(logDir);
+        SupportLogger.init(this);
         SupportLogger.start();
-
-    }
-
-    public String getAppFileRootDirectory() {
-        if (CommonUtils.isSDCardMounted()) {
-            return Environment.getExternalStorageDirectory() + "/thinking";
-        } else {
-            return getFilesDir().toString();
-        }
     }
 }

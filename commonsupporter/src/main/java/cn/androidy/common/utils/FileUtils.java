@@ -1,5 +1,7 @@
 package cn.androidy.common.utils;
 
+import android.content.Context;
+import android.os.Environment;
 import android.text.TextUtils;
 
 import java.io.BufferedReader;
@@ -615,5 +617,16 @@ public class FileUtils {
             return url;
         }
         return url.substring(url.lastIndexOf("/"), url.length());
+    }
+
+    public static File getDiskCacheDir(Context context, String uniqueName) {
+        String cachePath;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            cachePath = context.getExternalCacheDir().getPath();
+        } else {
+            cachePath = context.getCacheDir().getPath();
+        }
+        return new File(cachePath + File.separator + uniqueName);
     }
 }
