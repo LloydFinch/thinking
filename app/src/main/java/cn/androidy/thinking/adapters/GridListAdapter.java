@@ -12,23 +12,27 @@ import android.widget.BaseAdapter;
 import java.util.AbstractList;
 import java.util.List;
 
+import cn.androidy.listgrid.control.TickTimer;
 import cn.androidy.thinking.R;
 import cn.androidy.thinking.data.IGridItem;
 import cn.androidy.thinking.views.GridListView2x1;
 import cn.androidy.thinking.views.GridListView3x1;
 import cn.androidy.thinking.views.GridListView4x1;
+import cn.androidy.thinking.views.MetroConfigLayout;
 
-public class GridListAdapter extends BaseAdapter {
+public class GridListAdapter extends BaseAdapter implements AbsListView.OnScrollListener {
     Context context;
     List<IGridItem> list;
     LayoutInflater inflater;
     DisplayMetrics dm;
+    private TickTimer tickTimer;
 
     public GridListAdapter(Context context, List<IGridItem> list) {
         this.context = context;
         this.list = list;
         dm = context.getResources().getDisplayMetrics();
         inflater = LayoutInflater.from(context);
+        tickTimer = new TickTimer();
     }
 
     @Override
@@ -89,6 +93,46 @@ public class GridListAdapter extends BaseAdapter {
                 vh = (ViewHolder4x1) convertView.getTag();
             }
             ((GridListView4x1) convertView).bindData(8);
+        } else if (type == IGridItem.TYPE_METRO1) {
+            ViewHolderMetro1 vh;
+            if (convertView == null) {
+                convertView = new MetroConfigLayout(context, MetroConfigLayout.METRO_1_HW_RATIO, dm.widthPixels, tickTimer);
+                vh = new ViewHolderMetro1(convertView);
+                convertView.setTag(vh);
+            } else {
+                vh = (ViewHolderMetro1) convertView.getTag();
+            }
+            ((MetroConfigLayout) convertView).bindData(1);
+        } else if (type == IGridItem.TYPE_METRO3) {
+            ViewHolderMetro3 vh;
+            if (convertView == null) {
+                convertView = new MetroConfigLayout(context, MetroConfigLayout.METRO_3_HW_RATIO, dm.widthPixels, tickTimer);
+                vh = new ViewHolderMetro3(convertView);
+                convertView.setTag(vh);
+            } else {
+                vh = (ViewHolderMetro3) convertView.getTag();
+            }
+            ((MetroConfigLayout) convertView).bindData(3);
+        } else if (type == IGridItem.TYPE_METRO4) {
+            ViewHolderMetro4 vh;
+            if (convertView == null) {
+                convertView = new MetroConfigLayout(context, MetroConfigLayout.METRO_4_HW_RATIO, dm.widthPixels, tickTimer);
+                vh = new ViewHolderMetro4(convertView);
+                convertView.setTag(vh);
+            } else {
+                vh = (ViewHolderMetro4) convertView.getTag();
+            }
+            ((MetroConfigLayout) convertView).bindData(4);
+        } else if (type == IGridItem.TYPE_METRO6) {
+            ViewHolderMetro6 vh;
+            if (convertView == null) {
+                convertView = new MetroConfigLayout(context, MetroConfigLayout.METRO_6_HW_RATIO, dm.widthPixels, tickTimer);
+                vh = new ViewHolderMetro6(convertView);
+                convertView.setTag(vh);
+            } else {
+                vh = (ViewHolderMetro6) convertView.getTag();
+            }
+            ((MetroConfigLayout) convertView).bindData(6);
         } else if (type == IGridItem.TYPE_DIVIDOR) {
             ViewHolderDividor vh;
             if (convertView == null) {
@@ -105,6 +149,20 @@ public class GridListAdapter extends BaseAdapter {
 
         }
         return convertView;
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (tickTimer != null) {
+            tickTimer.onScrollStateChanged(view, scrollState);
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        if (tickTimer != null) {
+            tickTimer.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+        }
     }
 
 
@@ -128,6 +186,38 @@ public class GridListAdapter extends BaseAdapter {
         View v;
 
         ViewHolder4x1(View v) {
+            this.v = v;
+        }
+    }
+
+    private class ViewHolderMetro1 {
+        View v;
+
+        ViewHolderMetro1(View v) {
+            this.v = v;
+        }
+    }
+
+    private class ViewHolderMetro3 {
+        View v;
+
+        ViewHolderMetro3(View v) {
+            this.v = v;
+        }
+    }
+
+    private class ViewHolderMetro4 {
+        View v;
+
+        ViewHolderMetro4(View v) {
+            this.v = v;
+        }
+    }
+
+    private class ViewHolderMetro6 {
+        View v;
+
+        ViewHolderMetro6(View v) {
             this.v = v;
         }
     }

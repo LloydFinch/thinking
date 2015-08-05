@@ -29,6 +29,54 @@ public class GridListActivity extends DemoDetailBaseActivity {
         list.add(new IGridItem() {
             @Override
             public int getType() {
+                return IGridItem.TYPE_METRO1;
+            }
+        });
+        list.add(new IGridItem() {
+            @Override
+            public int getType() {
+                return IGridItem.TYPE_DIVIDOR;
+            }
+        });
+        list.add(new IGridItem() {
+            @Override
+            public int getType() {
+                return IGridItem.TYPE_METRO3;
+            }
+        });
+        list.add(new IGridItem() {
+            @Override
+            public int getType() {
+                return IGridItem.TYPE_DIVIDOR;
+            }
+        });
+        list.add(new IGridItem() {
+            @Override
+            public int getType() {
+                return IGridItem.TYPE_METRO4;
+            }
+        });
+        list.add(new IGridItem() {
+            @Override
+            public int getType() {
+                return IGridItem.TYPE_DIVIDOR;
+            }
+        });
+        list.add(new IGridItem() {
+            @Override
+            public int getType() {
+                return IGridItem.TYPE_METRO6;
+            }
+        });
+        list.add(new IGridItem() {
+            @Override
+            public int getType() {
+                return IGridItem.TYPE_DIVIDOR;
+            }
+        });
+        list.add(new IGridItem() {
+            @Override
+            public int getType() {
                 return IGridItem.TYPE_4x1;
             }
         });
@@ -58,6 +106,7 @@ public class GridListActivity extends DemoDetailBaseActivity {
         });
         adapter = new GridListAdapter(this, list);
         listView.setAdapter(adapter);
+        listView.setOnScrollListener(adapter);
     }
 
     @Override
