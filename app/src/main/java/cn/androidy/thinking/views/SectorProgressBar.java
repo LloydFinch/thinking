@@ -101,7 +101,7 @@ public class SectorProgressBar extends View {
             mArcPaint.setColor(progressColor);
             float endEdge = 360 * mProgress * 1.0f / mMax;
             canvas.drawArc(mRange, -90, endEdge, false, mArcPaint); // 根据进度画圆弧
-            String text = "123";
+            String text = mProgress / (mMax / 100) + "%";
             float w = measureText(text.toString(), mTextPaint);//必须先测量让mTextBound获取值。
             int startX = (int) (mCenter - w / 2);//文字居中
             Paint.FontMetricsInt fmi = mTextPaint.getFontMetricsInt();
