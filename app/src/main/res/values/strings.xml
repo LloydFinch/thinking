@@ -2,6 +2,7 @@
     <string name="app_name">Android前线</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">设置</string>
+    <string name="action_check_log">查看日志</string>
     <string name="action_crash_app">闪退</string>
     <string name="original_link">原文链接</string>
     <string name="search">搜索</string>
@@ -32,4 +33,5 @@
     <string name="title_activity_log">查看Log</string>
     <string name="crash_toast_text">提示:很抱歉,程序出现异常,即将退出.</string>
     <string name="title_activity_grid_list">GridListActivity</string>
+    <string name="title_activity_draw_view1">DrawViewActivity1</string>
 </resources>

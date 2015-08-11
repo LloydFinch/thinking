@@ -15,12 +15,6 @@ public class LogWriteTask implements Runnable {
     private String dir;
     private String tag;
     private String logContent;
-    private static ExecutorService es = Executors.newSingleThreadExecutor();
-
-    public static void saveLog(String dir, String tag, String logContent) {
-        LogWriteTask logWriteTask = new LogWriteTask(dir, tag, logContent);
-        es.execute(logWriteTask);
-    }
 
     public LogWriteTask(String dir, String tag, String logContent) {
         super();
@@ -37,9 +31,9 @@ public class LogWriteTask implements Runnable {
         if (TextUtils.isEmpty(tag)) {
             tag = "defaultTag";
         }
-        String tmpTag = tag + "tmp";
         String fileName = new File(dir, tag).getAbsolutePath();
-        String tmpFileName = new File(dir, tmpTag).getAbsolutePath();
+        String tmpFileName = getTempFile();
+        FileUtils.makeDirs(tmpFileName);
         try {
             FileUtils.copyFile(fileName, tmpFileName);
             FileUtils.writeFile(fileName, logContent);
@@ -48,5 +42,11 @@ public class LogWriteTask implements Runnable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private synchronized String getTempFile() {
+        String tmpTag = tag + "tmp";
+        String tmpFileName = new File(dir, tmpTag).getAbsolutePath();
+        return tmpFileName;
     }
 }

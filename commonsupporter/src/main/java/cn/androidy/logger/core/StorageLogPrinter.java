@@ -3,6 +3,8 @@ package cn.androidy.logger.core;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.LogManager;
 
 import cn.androidy.common.utils.Phrase;
@@ -20,6 +22,8 @@ public class StorageLogPrinter extends MessageOnlyLogFilter {
     public String getLogDir() {
         return logDir;
     }
+
+    private static ExecutorService es = Executors.newSingleThreadExecutor();
 
     public StorageLogPrinter() {
     }
@@ -111,7 +115,8 @@ public class StorageLogPrinter extends MessageOnlyLogFilter {
      * Outputs the string as a new line of log data in the LogView.
      */
     public void appendToLog(String tag, String s) {
-        LogWriteTask.saveLog(logDir, tag, "\n" + s);
+        LogWriteTask logWriteTask = new LogWriteTask(logDir, tag, "\n" + s);
+        es.execute(logWriteTask);
     }
 
     public static String getCurrentTimeTag() {

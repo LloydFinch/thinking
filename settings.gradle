@@ -1,1 +1,1 @@
-include ':app', ':commonsupporter', ':listgrid'
+include ':app', ':commonsupporter', ':listgrid', ':viewstudy'

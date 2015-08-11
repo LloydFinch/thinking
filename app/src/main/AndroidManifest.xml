@@ -84,6 +84,10 @@
             android:name=".GridListActivity"
             android:label="@string/title_activity_grid_list" >
         </activity>
+        <activity
+            android:name=".DrawViewActivity1"
+            android:label="@string/title_activity_draw_view1" >
+        </activity>
     </application>
 
 </manifest>

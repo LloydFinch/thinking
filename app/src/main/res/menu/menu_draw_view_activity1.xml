@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cn.androidy.thinking.DrawViewActivity1">
+    <item
+        android:id="@+id/action_check_log"
+        android:orderInCategory="100"
+        android:title="@string/action_check_log"
+        app:showAsAction="never" />
+</menu>
