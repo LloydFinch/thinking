@@ -126,7 +126,8 @@ public class StorageLogPrinter extends MessageOnlyLogFilter {
         String hour = String.format(Locale.US, "%02d", (calendar.get(Calendar.HOUR_OF_DAY)));
         String min = String.format(Locale.US, "%02d", (calendar.get(Calendar.MINUTE)));
         String sec = String.format(Locale.US, "%02d", (calendar.get(Calendar.SECOND)));
-        String time = month + "-" + date + "-" + hour + "-" + min + "-" + sec;
+        String milis = String.format(Locale.US, "%02d", (calendar.get(Calendar.MILLISECOND)));
+        String time = month + "-" + date + " " + hour + ":" + min + ":" + sec + "." + milis;
         return time;
     }
 }

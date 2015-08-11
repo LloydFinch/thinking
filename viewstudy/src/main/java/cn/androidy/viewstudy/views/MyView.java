@@ -30,42 +30,49 @@ public class MyView extends View {
     }
 
     private void init() {
-        Log.d(LOG_TAG, "init");
+        Log.d(LOG_TAG, "init start...");
     }
 
     @Override
     protected void onAttachedToWindow() {
+        Log.d(LOG_TAG, "onAttachedToWindow start...");
         super.onAttachedToWindow();
-        Log.d(LOG_TAG, "onAttachedToWindow");
+
     }
 
     @Override
     protected void onDetachedFromWindow() {
+        Log.d(LOG_TAG, "onDetachedFromWindow start...");
         super.onDetachedFromWindow();
-        Log.d(LOG_TAG, "onDetachedFromWindow");
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.d(LOG_TAG, "onDraw start...");
         super.onDraw(canvas);
-        Log.d(LOG_TAG, "onDraw");
+
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        Log.d(LOG_TAG, "onMeasure start...");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.d(LOG_TAG, "onMeasure");
+
     }
 
     @Override
     public void layout(int l, int t, int r, int b) {
+        Log.d(LOG_TAG, "layout start...\nl=" + l + ";t=" + t + ";r=" + r + ";b=" + b);
         super.layout(l, t, r, b);
-        Log.d(LOG_TAG, "layout l=" + l + ";t=" + t + ";r=" + r + "b=" + b);
+
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        Log.d(LOG_TAG, "onLayout start...\n" +
+                "changed=" + changed + "; left=" + left + ";top=" + top + ";right=" + right + ";bottom=" + bottom);
         super.onLayout(changed, left, top, right, bottom);
-        Log.d(LOG_TAG, "onLayout changed=" + changed + "; left=" + left + ";top=" + top + ";right=" + right + "bottom=" + bottom);
+
     }
 }

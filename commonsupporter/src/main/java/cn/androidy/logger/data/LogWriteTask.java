@@ -32,21 +32,6 @@ public class LogWriteTask implements Runnable {
             tag = "defaultTag";
         }
         String fileName = new File(dir, tag).getAbsolutePath();
-        String tmpFileName = getTempFile();
-        FileUtils.makeDirs(tmpFileName);
-        try {
-            FileUtils.copyFile(fileName, tmpFileName);
-            FileUtils.writeFile(fileName, logContent);
-            FileUtils.writeFile(fileName, new FileInputStream(tmpFileName), true);
-            FileUtils.deleteFile(tmpFileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private synchronized String getTempFile() {
-        String tmpTag = tag + "tmp";
-        String tmpFileName = new File(dir, tmpTag).getAbsolutePath();
-        return tmpFileName;
+        FileUtils.writeFile(fileName, logContent, true);
     }
 }
