@@ -13,11 +13,13 @@ import java.util.concurrent.Executors;
 
 import cn.androidy.common.utils.FileUtils;
 import cn.androidy.common.utils.StringUtils;
+import cn.androidy.logger.core.Log;
+import cn.androidy.logger.core.StorageLogPrinter;
+import cn.androidy.logger.core.SupportLogger;
 
 public class StorageReportSender implements ReportSender {
     private String dir;
     private ExecutorService es = Executors.newFixedThreadPool(3);
-    private static final int MAX_LOG_FILE_NUM = 50;
 
     public StorageReportSender(Context context) {
         this.dir = FileUtils.getDiskCacheDir(context, "log/Crash").getAbsolutePath();
@@ -32,15 +34,6 @@ public class StorageReportSender implements ReportSender {
                 if (StringUtils.isEmpty(dir)) {
                     return;
                 }
-                GregorianCalendar calendar = new GregorianCalendar();
-                String fileName = (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE) + "-"
-                        + calendar.get(Calendar.HOUR_OF_DAY) + "-" + calendar.get(Calendar.MINUTE) + "-"
-                        + calendar.get(Calendar.SECOND) + ".txt";
-                File dirF = new File(dir);
-                if (dirF.listFiles() != null && dirF.listFiles().length >= MAX_LOG_FILE_NUM) {
-                    FileUtils.deleteFile(dir);
-                }
-                File file = new File(dir, fileName);
                 StringBuilder sb = new StringBuilder();
                 sb.append("********Android系统版本********\n" + errorContent.getProperty(ReportField.ANDROID_VERSION)
                         + "\n");
@@ -55,7 +48,7 @@ public class StorageReportSender implements ReportSender {
                 sb.append("**********App闪退时间**********\n" + errorContent.getProperty(ReportField.USER_CRASH_DATE)
                         + "\n");
                 sb.append("************闪退Log***********\n" + errorContent.getProperty(ReportField.STACK_TRACE) + "\n");
-                FileUtils.writeFile(file.getAbsolutePath(), sb.toString());
+                SupportLogger.getPrinter().appendToLog(SupportLogger.getCommonLogDir()+"/Crash", StorageLogPrinter.getCurrentTimeTag(),sb.toString());
             }
         });
     }

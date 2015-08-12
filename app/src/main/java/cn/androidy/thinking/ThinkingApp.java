@@ -23,9 +23,6 @@ public class ThinkingApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ACRA.init(this);
-        StorageReportSender sender = new StorageReportSender(this);
-        ACRA.getErrorReporter().setReportSender(sender);
         SupportLogger.init(this);
         SupportLogger.enable(true);
     }

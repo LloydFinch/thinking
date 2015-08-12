@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jakewharton.disklrucache;
+package cn.androidy.common.disklrucache;
 
 import java.io.BufferedWriter;
 import java.io.Closeable;

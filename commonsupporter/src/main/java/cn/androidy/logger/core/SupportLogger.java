@@ -1,7 +1,11 @@
 package cn.androidy.logger.core;
 
+import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
+
+import org.acra.ACRA;
+import org.acra.sender.StorageReportSender;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -41,21 +45,29 @@ public class SupportLogger {
     }
 
 
-    public static void init(Context context) {
-        init(context, null);
+    public static void init(Application application) {
+        init(application, null);
     }
 
-    public static void init(Context context, LoggerSettings settings) {
+    public static StorageLogPrinter getPrinter() {
+        return getInstance().getStorageLogPrinter();
+    }
+
+    public static void init(Application application, LoggerSettings settings) {
+        ACRA.init(application);
+        StorageReportSender sender = new StorageReportSender(application);
+        ACRA.getErrorReporter().setReportSender(sender);
+        Context context = application.getApplicationContext();
         String dir;
         if (settings != null && !TextUtils.isEmpty(settings.getDir())) {
             dir = settings.getDir();
         } else {
             dir = FileUtils.getDiskCacheDir(context, "log").getAbsolutePath();
         }
-        SupportLogger.getInstance().getStorageLogPrinter().setLogDir(dir);
+        getPrinter().setLogDir(dir);
         LogWrapper logWrapper = new LogWrapper();
         Log.setLogNode(logWrapper);
-        logWrapper.setNext(getInstance().getStorageLogPrinter());
+        logWrapper.setNext(getPrinter());
     }
 
     public static void readLog(String tag, LogReadTask.ILogReadListener listener) {
@@ -74,7 +86,7 @@ public class SupportLogger {
     }
 
     public static String getCommonLogDir() {
-        return getInstance().getStorageLogPrinter().getLogDir();
+        return getPrinter().getLogDir();
     }
 
     public static boolean isEnable() {

@@ -115,7 +115,14 @@ public class StorageLogPrinter extends MessageOnlyLogFilter {
      * Outputs the string as a new line of log data in the LogView.
      */
     public void appendToLog(String tag, String s) {
-        LogWriteTask logWriteTask = new LogWriteTask(logDir, tag, "\n" + s);
+        appendToLog(logDir, tag, s);
+    }
+
+    /**
+     * Outputs the string as a new line of log data in the LogView.
+     */
+    public void appendToLog(String dir, String tag, String s) {
+        LogWriteTask logWriteTask = new LogWriteTask(dir, tag, "\n" + s);
         es.execute(logWriteTask);
     }
 
