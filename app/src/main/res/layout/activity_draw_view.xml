@@ -1,0 +1,36 @@
+<cn.androidy.thinking.views.MyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sample_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:trace_name="MyRelativeLayout1">
+
+    <cn.androidy.thinking.views.MyView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:trace_name="MyView1" />
+
+    <cn.androidy.thinking.views.MyView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:trace_name="MyView2" />
+
+    <cn.androidy.thinking.views.MyView
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        app:trace_name="MyView3" />
+
+    <cn.androidy.thinking.views.MyRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:trace_name="MyRelativeLayout2">
+
+        <cn.androidy.thinking.views.MyView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:trace_name="MyView4" />
+
+    </cn.androidy.thinking.views.MyRelativeLayout>
+
+</cn.androidy.thinking.views.MyRelativeLayout>

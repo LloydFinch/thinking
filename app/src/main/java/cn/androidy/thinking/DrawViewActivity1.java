@@ -1,9 +1,10 @@
 package cn.androidy.thinking;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import cn.androidy.thinking.constant.Constants;
 
 public class DrawViewActivity1 extends DemoDetailBaseActivity {
 
@@ -38,7 +39,7 @@ public class DrawViewActivity1 extends DemoDetailBaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_check_log) {
-            LogActivity.checkLog(this, "MyView");
+            LogActivity.checkLog(this, Constants.LOG_TAG_VIEW_LAYOUT);
             return true;
         }
 

@@ -19,4 +19,9 @@
             <enum name="vertical" value="1" />
         </attr>
     </declare-styleable>
+
+
+    <declare-styleable name="MyTraceView">
+        <attr name="trace_name" format="string" />
+    </declare-styleable>
 </resources>

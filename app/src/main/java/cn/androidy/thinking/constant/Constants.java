@@ -9,4 +9,5 @@ public class Constants {
     public static final String IMG_URL = "http://b.zol-img.com.cn/sjbizhi/images/8/208x312/1426750757645.jpg";
 
     public static int color_dividor = R.color.dividor;
+    public static final String LOG_TAG_VIEW_LAYOUT = "View绘制";
 }

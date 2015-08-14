@@ -74,16 +74,16 @@ public class LogDetailFragment extends Fragment implements LogReadTask.ILogReadL
         super.onPrepareOptionsMenu(menu);
     }
 
-    public static final String TEXT_TO_HIGHLIGHT = "cn.androidy";
+    public static final String TEXT_TO_HIGHLIGHT = "===";
 
     private CharSequence getHighliText(String msg) {
         if (TextUtils.isEmpty(msg) || !msg.contains(TEXT_TO_HIGHLIGHT)) {
             return msg;
         } else {
-            msg = msg.replaceAll(TEXT_TO_HIGHLIGHT, "{" + TEXT_TO_HIGHLIGHT + "}");
-            CharSequence charSequence = SizeColorPhrase.from(msg).withSeparator("{}")
-                    .innerColorSize(Color.RED, DimenUtils.spTopx(getActivity(), 18)).format();
-            return charSequence;
+//            msg = msg.replaceAll(TEXT_TO_HIGHLIGHT, "{" + TEXT_TO_HIGHLIGHT + "}");
+//            CharSequence charSequence = SizeColorPhrase.from(msg).withSeparator("{}")
+//                    .innerColorSize(Color.RED, DimenUtils.spTopx(getActivity(), 18)).format();
+            return msg;
         }
     }
 }
