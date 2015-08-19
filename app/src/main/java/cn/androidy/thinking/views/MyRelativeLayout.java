@@ -13,7 +13,7 @@ import cn.androidy.thinking.constant.Constants;
 /**
  * Created by mwp on 2015/8/12.
  */
-public class MyRelativeLayout extends RelativeLayout {
+public class MyRelativeLayout extends RelativeLayout implements ITraceView {
     private String traceName;
 
     public MyRelativeLayout(Context context) {
@@ -79,5 +79,9 @@ public class MyRelativeLayout extends RelativeLayout {
         Log.d(Constants.LOG_TAG_VIEW_LAYOUT, traceName + ">>>>>>>>>>>>\nonLayout start...\n" +
                 "changed=" + changed + "; left=" + left + ";top=" + top + ";right=" + right + ";bottom=" + bottom);
         super.onLayout(changed, left, top, right, bottom);
+    }
+
+    public String getTraceName() {
+        return traceName;
     }
 }

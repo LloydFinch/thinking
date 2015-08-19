@@ -34,4 +34,5 @@
     <string name="crash_toast_text">提示:很抱歉,程序出现异常,即将退出.</string>
     <string name="title_activity_grid_list">GridListActivity</string>
     <string name="title_activity_draw_view1">DrawViewActivity1</string>
+    <string name="title_activity_draw_view_tree">DrawViewTreeActivity</string>
 </resources>

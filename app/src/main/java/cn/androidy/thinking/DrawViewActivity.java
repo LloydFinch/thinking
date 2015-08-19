@@ -1,21 +1,27 @@
 package cn.androidy.thinking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import cn.androidy.thinking.constant.Constants;
+import cn.androidy.thinking.data.DemoViewTreeManager;
 
-public class DrawViewActivity1 extends DemoDetailBaseActivity {
+public class DrawViewActivity extends DemoDetailBaseActivity {
+    private float density;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        density = getResources().getDisplayMetrics().density;
+        DemoViewTreeManager.getInstance(density).setTopView(findViewById(R.id.top_vg));
+        DemoViewTreeManager.getInstance(density).getTopView();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_draw_view1;
+        return R.layout.activity_draw_view;
     }
 
     @Override
@@ -39,11 +45,16 @@ public class DrawViewActivity1 extends DemoDetailBaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_check_log) {
-            LogActivity.checkLog(this, Constants.LOG_TAG_VIEW_LAYOUT);
+            startActivity(new Intent(this, DrawViewTreeActivity.class));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        DemoViewTreeManager.getInstance(density).reset();
+        super.onDestroy();
+    }
 }
