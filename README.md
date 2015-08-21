@@ -40,6 +40,28 @@
 
 #####3.[Android属性动画完全解析(下)，Interpolator和ViewPropertyAnimator的用法](http://blog.csdn.net/guolin_blog/article/details/44171115)
 
+###性能优化参考博客：
+
+####1.[Android App 性能优化实践](http://stackvoid.com/performance-tuning-on-android/)
+
+####2.[Android最佳性能实践(一)——合理管理内存](http://blog.csdn.net/guolin_blog/article/details/42238627)
+
+####3.[Android最佳性能实践(二)——分析内存的使用情况](http://blog.csdn.net/guolin_blog/article/details/42238633)
+
+####4.[Android最佳性能实践(三)——高性能编码优化](http://blog.csdn.net/guolin_blog/article/details/42318689)
+
+####5.[Android最佳性能实践(四)——布局优化技巧](http://blog.csdn.net/guolin_blog/article/details/43376527)
+
+####6.[性能优化系列总篇](http://www.trinea.cn/android/performance/)
+
+###性能优化官方指导：
+
+####1.[Improving Your Code with lint](http://developer.android.com/tools/debugging/improving-w-lint.html)
+
+####2.[Optimizing Your UI](http://developer.android.com/tools/debugging/debugging-ui.html)
+
+####3.[Improving Code Inspection with Annotations](http://developer.android.com/tools/debugging/annotations.html)
+
 
 
 
