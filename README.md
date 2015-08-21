@@ -56,11 +56,11 @@
 
 ###性能优化官方指导：
 
-####1.[(官方)Improving Your Code with lint](http://developer.android.com/tools/debugging/improving-w-lint.html)
+####1.[Improving Your Code with lint](http://developer.android.com/tools/debugging/improving-w-lint.html)
 
-####2.[(官方)Optimizing Your UI](http://developer.android.com/tools/debugging/debugging-ui.html)
+####2.[Optimizing Your UI](http://developer.android.com/tools/debugging/debugging-ui.html)
 
-####3.[(官方)Improving Code Inspection with Annotations](http://developer.android.com/tools/debugging/annotations.html)
+####3.[Improving Code Inspection with Annotations](http://developer.android.com/tools/debugging/annotations.html)
 
 
 
