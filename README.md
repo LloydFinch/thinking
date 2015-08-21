@@ -52,6 +52,14 @@
 
 ####5.[Android最佳性能实践(四)——布局优化技巧](http://blog.csdn.net/guolin_blog/article/details/43376527)
 
+####6.(官方)[Improving Your Code with lint](http://developer.android.com/tools/debugging/improving-w-lint.html)
+
+####7.(官方)[Optimizing Your UI](http://developer.android.com/tools/debugging/debugging-ui.html)
+
+####8.(官方)[Improving Code Inspection with Annotations](http://developer.android.com/tools/debugging/annotations.html)
+
+
+
 [article-details-38168103]:	http://blog.csdn.net/singwhatiwanna/article/details/38168103
 [article-details-38426471]:	http://blog.csdn.net/singwhatiwanna/article/details/38426471
 [Square-Open-Source]:	http://square.github.io/
