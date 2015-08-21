@@ -30,7 +30,13 @@ public class MyView extends View implements ITraceView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         StringBuilder sb = new StringBuilder(traceName + "  onMeasure start...");
-        sb.append("\nparent=" + getParent() + "\n");
+        String parentName;
+        if (getParent() instanceof ITraceView) {
+            parentName = ((ITraceView) getParent()).getTraceName();
+        } else {
+            parentName = getParent().toString();
+        }
+        sb.append("\nparent=" + parentName + "\n");
         ViewGroup.LayoutParams lp = getLayoutParams();
         if (lp != null) {
             if (lp.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
