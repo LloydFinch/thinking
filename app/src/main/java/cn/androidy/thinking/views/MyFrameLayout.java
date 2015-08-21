@@ -13,14 +13,14 @@ import cn.androidy.thinking.constant.Constants;
 /**
  * Created by mwp on 2015/8/12.
  */
-public class MyRelativeLayout extends RelativeLayout implements ITraceView {
+public class MyFrameLayout extends RelativeLayout implements ITraceView {
     private String traceName;
 
-    public MyRelativeLayout(Context context) {
+    public MyFrameLayout(Context context) {
         this(context, null);
     }
 
-    public MyRelativeLayout(Context context, AttributeSet attrs) {
+    public MyFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MyTraceView);
         traceName = attributes.getString(R.styleable.MyTraceView_trace_name);
