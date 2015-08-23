@@ -88,10 +88,6 @@
             android:name=".DrawViewActivity"
             android:label="@string/title_activity_draw_view1" >
         </activity>
-        <activity
-            android:name=".DrawViewTreeActivity"
-            android:label="@string/title_activity_draw_view_tree" >
-        </activity>
     </application>
 
 </manifest>

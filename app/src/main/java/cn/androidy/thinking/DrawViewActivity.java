@@ -1,60 +1,23 @@
 package cn.androidy.thinking;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.ViewParent;
 
-import cn.androidy.thinking.constant.Constants;
-import cn.androidy.thinking.data.DemoViewTreeManager;
+import cn.androidy.logger.core.Log;
 
-public class DrawViewActivity extends DemoDetailBaseActivity {
-    private float density;
+public class DrawViewActivity extends TraceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        density = getResources().getDisplayMetrics().density;
-        DemoViewTreeManager.getInstance(density).setTopView(findViewById(R.id.top_vg));
-        DemoViewTreeManager.getInstance(density).getTopView();
-    }
+        setContentView(R.layout.activity_draw_view);
+        Log.d("TraceActivity", "onCreate getWindow=" + getWindow());
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_draw_view;
-    }
-
-    @Override
-    protected int getFloatingActionButtonId() {
-        return 0;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_draw_view_activity1, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_check_log) {
-            startActivity(new Intent(this, DrawViewTreeActivity.class));
-            return true;
+        ViewParent topParent = (ViewParent) findViewById(R.id.top_vg);
+        while (topParent != null && topParent.getParent() != null) {
+            topParent = topParent.getParent();
+            Log.d("TraceActivity", ">>>" + topParent);
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy() {
-        DemoViewTreeManager.getInstance(density).reset();
-        super.onDestroy();
+        Log.d("TraceActivity", "topParent=" + topParent);
     }
 }

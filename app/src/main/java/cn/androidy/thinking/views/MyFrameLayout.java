@@ -3,7 +3,10 @@ package cn.androidy.thinking.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import cn.androidy.logger.core.Log;
@@ -13,7 +16,7 @@ import cn.androidy.thinking.constant.Constants;
 /**
  * Created by mwp on 2015/8/12.
  */
-public class MyFrameLayout extends RelativeLayout implements ITraceView {
+public class MyFrameLayout extends FrameLayout implements ITraceView {
     private String traceName;
 
     public MyFrameLayout(Context context) {
@@ -29,6 +32,7 @@ public class MyFrameLayout extends RelativeLayout implements ITraceView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
         StringBuilder sb = new StringBuilder(traceName + "  onMeasure start...");
         String parentName;
         if (getParent() instanceof ITraceView) {
@@ -89,5 +93,10 @@ public class MyFrameLayout extends RelativeLayout implements ITraceView {
 
     public String getTraceName() {
         return traceName;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
     }
 }
